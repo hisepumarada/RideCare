@@ -5,24 +5,20 @@ include "db_conn.php";
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.84.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <title>Headers · Bootstrap v5.0</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>RideCare</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/headers/">
     <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
 
 <style>
     .bd-placeholder-img {
@@ -116,10 +112,11 @@ include "db_conn.php";
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
 </style>
 
-</head>
-<body>
+  </head>
+  <body>
     
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="bootstrap" viewBox="0 0 118 94">
@@ -153,7 +150,7 @@ include "db_conn.php";
        width="200" height="40" ></svg>
       </a>
       <div class="col-md-3 text-end">
-        <a type="button" class="btn btn-primary" href="index.php">LOGIN</a>
+        <a type="button" class="btn btn-primary" href="admin/adminindex.php">ADMIN</a>
         <a type="button" class="btn btn-outline-primary" href="signup.php">Sign-up</a>
       </div>
     </header>
@@ -162,118 +159,45 @@ include "db_conn.php";
 
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
-<section class="home" id="home">
-        <div class="home-text">
-            <h1>We Have Everything <br> Your <span>Motorcycle</span> Need </h1>
-            <!-- Home Button -->
-            <div class="motorcycle-select">
-                <div id="yamaha"></div>
-                <div id="honda"></div>
-                <div id="suzuki"></div>
-            </div>
-        </div>
-        <script>
-            let yamahaBtn= document.getElementById("yamaha");
-            let hondaBtn= document.getElementById("honda");
-            let suzukiBtn= document.getElementById("suzuki");
-            let home = document.getElementById("home");
 
-            yamahaBtn.onclick = function(){
-                home.style.backgroundImage= "url(css/images/fazzio.png)";
-            }
-            hondaBtn.onclick = function(){
-                home.style.backgroundImage= "url(css/images/pcx.png)";
-            }
-            suzukiBtn.onclick = function(){
-                home.style.backgroundImage= "url(css/images/burgman.png)"
-            }
 
-        </script>
-    </section>
-    <!-- Service -->
-    <br><br><br>
-    <section class="service" id="service">
-        <div class="servicegif">
-        <h1>Services We Offer</h1>
-            <div class="row">
-                <div class="service-col">
-                    <h3>Change Oil</h3>
-                    <p>Normally, engine oil is changed anywhere between 1500 kilometers to 3000 kilometers, 
-                    or every one month, it depends whichever comes first.</p>
-                </div>
-                <div class="service-col">
-                    <h3>FI Cleaning</h3>
-                    <p>Regular maintenance on the FI system includes fuel injector cleaning and fuel filter 
-                    replacement. Over time, particulates from the fuel can accumulate on the fuel filter and on
-                    the nozzle of the injectors, causing a decrease in fuelling performance. As such, cleaning 
-                    and replacement of these parts are typically done every 15,000 kilometers to 25,000 
-                    kilometers.</p>
-                </div>
-                <div class="service-col">
-                    <h3>Valve Timing and Clearance</h3>
-                    <p>Ensuring proper valve timing and valve clearances allow for your motorcycle to draw in 
-                    air and fuel properly while pumping out the right amount of exhaust gasses in a timely 
-                    manner.</p>
-                </div>
-            </div></div>
-    </section>
+<main> 
+<div class="page-wrapper bg-gra-02 p-t-140 p-b-100 font-poppins" style="
+    background-image: url(css/images/indian-motorbike-banner.jpg);"><Br><br>
+  <div class="form-signin bg-dark-subtle rounded ">
+  <form action="" method="post">
+  <Center><svg class="bi me-2" width="40" height="20" role="img" aria-label="Bootstrap"><h3 style="font-size:40px;">Welcome to Ride<Span style="color: red;">Care</span></h3></svg>
+    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-    <!-- Dealers -->
-    <section class="dealers" id="dealers">
-        <h1>Dealers</h1>
-        <a>"Motorcycle dealers play a vital role in the motorcycle industry by facilitating the purchase, 
-        maintenance, and customization of motorcycles, as well as providing a range of related products 
-        and services to enhance the overall riding experience.</a>
-        <div class="row">
-            <div class="dealers-col">
-                <img src="css/images/dealer1.jpg">
-                <div class="layer">
-                    <h3>YAMAHA</h3>
-                </div>
-            </div>
-            <div class="dealers-col">
-                <img src="css/images/dealer2.jpg">
-                <div class="layer">
-                    <h3>MOTORTRADE</h3>
-                </div>
-            </div>
-            <div class="dealers-col">
-                <img src="css/images/dealer3.jpg">
-                <div class="layer">
-                    <h3>HONDA</h3>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="form-floating">
+      <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+      <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+      <label for="floatingPassword">Password</label>
+    </div>
 
-    <!-- Call To Action-->
-    <div class="row">
-    <section class="cta" id="home">
-        <h1>Book your Online Appointment Anytime and Anywhere Now!</h1>
-        <a href="" class="btn btn-danger">CONTACT US</a>
-        </div>
-    </section>
+    <div class="checkbox mb-3">
+      <label style="float: left;">
+        <input type="checkbox"  value="remember-me"> Remember me
+      </label>
+    </div><Br>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <br><br>
+    <div class="login-signup">
+                    <span class="text">Not a member?
+                        <a href="signup.php" class="text signup-link">Signup Now</a>
+                    </span>
+                </div>
+            </div><br><br>
+  </form>
 
- 
+</div></div>
+</main>
+ <?php include "function.php";   ?>
 
-    <script>
-  let sections = document.querySelectorAll('section');
-let navLinks = document.querySelectorAll('header nav a');
-window.onscroll = () => {
-    sections.forEach(sec => {
-        let top = window.scrollY;
-        let offset = sec.offsetTop - 150;
-        let height = sec.offsetHeight;
-        let id = sec.getAttribute('id');
-        if(top >= offset && top < offset + height) {
-            navLinks.forEach(links => {
-                links.classList.remove('active');
-                document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
-            });
-        };
-    });
-};
-</script>
+ <br><br>
  <?php include "inc/footer.php";  ?>
 </body>
 </html>
