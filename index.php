@@ -153,7 +153,7 @@ include "db_conn.php";
        width="200" height="40" ></svg>
       </a>
       <div class="col-md-3 text-end">
-        <a type="button" class="btn btn-primary" href="index.php">LOGIN</a>
+        <a type="button" class="btn btn-primary" href="login.php">LOGIN</a>
         <a type="button" class="btn btn-outline-primary" href="signup.php">Sign-up</a>
       </div>
     </header>

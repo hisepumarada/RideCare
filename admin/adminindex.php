@@ -201,7 +201,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
        width="200" height="40" ></svg>
       </a>
       <div class="col-md-3 text-end">
-        <a type="button" class="btn btn-primary" href="../index.php">RIDER</a>
+        <a type="button" class="btn btn-primary" href="../login.php">RIDER</a>
         <a type="button" class="btn btn-outline-primary" href="signup.php">Sign-up</a>
       </div>
     </header>
