@@ -57,35 +57,6 @@ echo $output;
         // DataTable initialization
         var table = $('#example').DataTable();
 
-        // DataTable Buttons initialization
-        new $.fn.dataTable.Buttons(table, {
-            buttons: [
-                {
-                    extend: 'print',
-                    text: 'Print',
-                    title: 'Table Print',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3] // Adjust the column indices based on your table structure
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    text: 'Export to Excel',
-                    title: 'Table Export',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3] // Adjust the column indices based on your table structure
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    text: 'Export to PDF',
-                    title: 'Table Export',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3] // Adjust the column indices based on your table structure
-                    }
-                }
-            ]
-        });
 
         // Add the export buttons to the DataTable
         table.buttons().container().appendTo($('.kaliwa'));
