@@ -29,7 +29,15 @@ $page = 'shopriders';
         <main>
 			<div class="head-title">
 				<div class="left">
-					<h1>Main Menu</h1>
+				<?php 
+    if(isset($_GET['usertype_id']))
+    {
+        $usertype_id = mysqli_real_escape_string($conn, $_GET['usertype_id']);
+		$select = mysqli_query($conn, "SELECT * FROM user WHERE usertype_id = '$usertype_id'") or die('query failed');
+if(mysqli_num_rows($select) > 0){
+   $fetch = mysqli_fetch_assoc($select);
+        ?>
+					<h1><?php echo $fetch['firstname'] . ' ' . $fetch['lastname']; ?></h1>
 					<ul class="breadcrumb">
 						<li>
 						<a class="active" href="shopdashboard.php">Dashboard</a>
@@ -40,9 +48,10 @@ $page = 'shopriders';
 						</li>
 						<li><i class='bx bx-chevron-right' ></i></li>
 						<li>
+				
 						<a class="hide" href="shopdashboard.php">Main Menu</a>
 						</li>					
-					</ul>
+					</ul> <?php }}?>
 				</div>
 			</div>
 			
