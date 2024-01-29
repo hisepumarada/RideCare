@@ -69,9 +69,9 @@ $page = 'shopteam';
                 <td><?= $row['gender']; ?></td>
                 <td><?= $row['email']; ?></td>
                 <td>
+                <form method="POST" action="">
                     <a class='btn btn-primary mr-3' href="shopteamedit.php?usertype_id=<?php echo $row['usertype_id']; ?>">EDIT</a>
-                    <form method="POST" action="">
-                        <input type="hidden" name="usertype_id" value="<?php echo $row['usertype_id']; ?>"><br>
+                        <input type="hidden" name="usertype_id" value="<?php echo $row['usertype_id']; ?>">
                         <button class='btn btn-danger' type="submit" name="delete_btn">DELETE</button>
                     </form>
                 </td>

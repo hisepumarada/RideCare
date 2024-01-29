@@ -104,10 +104,9 @@ $page = 'shopriders';
                     <td><?php echo $rider['service']; ?></td>
                     <td><?php echo $rider['odometer']; ?></td>   
                     <td>
+                    <form method="POST" action="">
                     <a class='btn btn-primary mr-3' href="shopcouponedit.php?coupon_id=<?php echo $rider['coupon_id']; ?>">VIEW</a>
-
-<form method="POST" action="">
-    <input type="hidden" name="coupon_id" value="<?php echo $rider['coupon_id']; ?>"> <br>
+    <input type="hidden" name="coupon_id" value="<?php echo $rider['coupon_id']; ?>"> 
     <button class='btn btn-danger' type="submit" name="delete_btn">DELETE</button>
 </form>
 

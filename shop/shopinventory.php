@@ -16,7 +16,11 @@ $page = 'shopinventory';
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.css" rel="stylesheet">
-	<title>RideCare SHOP: Reports</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>RideCare SHOP: Inventory</title>
 <style>
 	    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
 		.row.content {height: 550px}
@@ -84,78 +88,50 @@ $page = 'shopinventory';
 						</li>
 					</ul>
 				</div>
+                <a href='shopinventorycreate.php' class="btn-download">
+					<i class='bx bx-add-to-queue' ></i>
+					<span class="text">ADD PRODUCT</span>
+				</a>
 			</div>
 
     <div class="table-data">
      <div class="order">
-     <?php
-$product_ids = array(); // Initialize an array to store product IDs
-
-$sql = "SELECT * FROM product";
-$result = mysqli_query($conn, $sql) or die(mysqli_error($conn));
-
-// Check if there is at least one row
-if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        // Assuming the product ID is stored in the 'product_id' column
-        $product_id = $row['product_id'];
-
-        // Check if the product ID is not already in the list
-        if (!in_array($product_id, $product_ids)) {
-            // Add the product ID to the list
-            $product_ids[] = $product_id;
-
-            // Now you can use $product_id in your code
-            // For example, you can echo it or use it in further processing
-
-
-            // Product data
-            $title = $row['name'];
-            $quantity = $row['quantity'];
-            $imageUrl = $row['image'];
-
-            // Check if form is submitted
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                // Get the submitted values
-                $addQuantity = isset($_POST['add']) ? (int)$_POST['add'] : 0;
-                $subtractQuantity = isset($_POST['subtract']) ? (int)$_POST['subtract'] : 0;
-
-                // Update the quantity
-                $quantity = $quantity + $addQuantity - $subtractQuantity;
-
-                // Make sure the quantity doesn't go below 0
-                if ($quantity < 0) {
-                    $quantity = 0;
-                }
-
-                // Update the quantity in the database
-                $updateQuery = "UPDATE product SET quantity = $quantity WHERE product_id = " . $product_id;
-                mysqli_query($conn, $updateQuery) or die(mysqli_error($conn));
-            }
-
-            // Echoing the HTML with PHP variables
-            echo '<div class="card">';
-            echo '<h2>' . $title . '</h2>';
-            echo '<img src="../uploaded_img/' . $imageUrl . '" alt="Product Image" style="max-width: 20%; border-radius: 4px; margin-bottom: 10px;">';
-            echo '<p>Quantity: ' . $quantity . '</p>';
-
-            // Form for adding and subtracting items
-            echo '<form method="post">';
-            echo '<label for="add">Add:</label>';
-            echo '<input type="number" name="add" id="add" min="0" value="0">';
-            echo '<label for="subtract">Subtract:</label>';
-            echo '<input type="number" name="subtract" id="subtract" min="0" value="0">';
-            echo '<button type="submit">Update</button>';
-            echo '</form>';
-
-            echo '</div>';
+     <table id="example" class="table table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>Payment ID</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody style="font-size: larger;">
+    <?php 
+        $query = "SELECT * FROM product";
+        $query_run = mysqli_query($conn, $query);
+        
+        while($rider = mysqli_fetch_array($query_run)) {
+            ?>
+            <tr>
+                <td><?php echo $rider['product_id']; ?></td>
+                <td><?php echo $rider['name']; ?></td>
+                <td><?php echo $rider['quantity']; ?></td>
+                <td><?php echo $rider['amount']; ?></td>
+                <td>
+                <form method="POST" action="">
+                <a class='btn btn-primary mr-3' href="shopinventoryedit.php?product_id=<?php echo $rider['product_id']; ?>">EDIT</a>
+                    <input type="hidden" name="product_id" value="<?php echo $rider['product_id']; ?>"> 
+                  <button class='btn btn-danger' type="submit" name="delete_btn">DELETE</button>
+                </form>
+            </td>
+            </tr>
+            <?php
         }
-    }
-} else {
-    echo "No product found in the database.";
-}
-
-?>
+    
+    ?>
+    </tbody>
+</table>
 
 
     </div>
@@ -163,5 +139,27 @@ if (mysqli_num_rows($result) > 0) {
 	
     
 </main>
+<?php
+    if(isset($_POST['delete_btn'])) {
+    $product_id_to_delete = mysqli_real_escape_string($conn, $_POST['product_id']);
+    
+    // Perform the deletion query
+    $delete_query = "DELETE FROM product WHERE product_id = '$product_id_to_delete'";
+    $delete_query_run = mysqli_query($conn, $delete_query);
+    ?>
+    <script>
+    swal({
+     title: "Product Deleted is Success",
+     text: "",
+     icon: "success",
+     button: "Okay!",
+  }).then(function() {
+   window.location = "shopinventory.php";
+});
+   </script>  
+   <?php
+}    
+
+?>
 </body>
 </html>

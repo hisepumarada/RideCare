@@ -114,10 +114,10 @@ if(isset($_POST['delete_btn'])) {
                 <td><?php echo $rider['status']; ?></td>
                 <td><?php echo $rider['amount']; ?></td>
                 <td>
-                <a class='btn btn-primary mr-3' href="shoppaymentedit.php?payment_id=<?php echo $rider['payment_id']; ?>">EDIT</a>
                 <form method="POST" action="">
+                <a class='btn btn-primary mr-3' href="shoppaymentedit.php?payment_id=<?php echo $rider['payment_id']; ?>">EDIT</a>
                     <input type="hidden" name="payment_id" value="<?php echo $rider['payment_id']; ?>">
-                   <br> <button class='btn btn-danger' type="submit" name="delete_btn">DELETE</button>
+               <button class='btn btn-danger' type="submit" name="delete_btn">DELETE</button>
                 </form>
             </td>
             </tr>
