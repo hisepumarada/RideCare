@@ -19,7 +19,7 @@ $page = 'shopriders';
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.css" rel="stylesheet">
-	<title>RideCare SHOP: Payment</title>
+	<title>RideCare SHOP: Rider Appointments</title>
 
 <?php include "../inc/sidebarshop.php"; ?>
 </head>	
