@@ -20,7 +20,7 @@ $page = 'shopbook';
  
 
 
-	<title>RideCare SHOP: Riders</title>
+	<title>RideCare SHOP: Approval Appointment</title>
     </head>
 <style>
  .kaliwa {
