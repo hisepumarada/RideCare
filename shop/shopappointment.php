@@ -17,6 +17,7 @@ $page = 'shopbook';
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.css" rel="stylesheet">
 	<title>RideCare SHOP: Appointment</title>
+</head>
 <style>
 	    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
 		.row.content {height: 550px}
@@ -55,12 +56,10 @@ $page = 'shopbook';
 				<li>
 					<i class='bx bxs-calendar-plus' ></i>
 					<span class="text">
-                        <p>For Approval Books</p>
+          <p>For Approval Books</p>
 					<?php 
 	  $dash_post_query = "SELECT * FROM appointment WHERE status = 'pending'";
       $dash_post_query = mysqli_query($conn, $dash_post_query);
-
-
       if($post_total = mysqli_num_rows($dash_post_query))
       {
         echo ' 
@@ -78,8 +77,6 @@ $page = 'shopbook';
 					<?php
 	  $dash_post_query = "SELECT * FROM appointment WHERE status = 'approve' AND date =CURDATE()";
       $dash_post_query = mysqli_query($conn, $dash_post_query);
-
-
       if($post_total = mysqli_num_rows($dash_post_query))
       {
         echo '
@@ -110,9 +107,46 @@ $page = 'shopbook';
 					</span>
 				</li>
 			</ul>
+
+      <div class="table-data">
+     <div class="order">
+      <H1>COMPLETED APPOINTMENT</H1>
+      <br><br>
+        <table id="example" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>RIDER ID</th>
+                <th>DATE</th>
+                <th>NAME</th>
+                <th>Mobile</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php 
+          $riders = mysqli_query($conn, "SELECT * FROM appointment WHERE status = 'complete'") or die(mysqli_error($conn));
+
+          if($riders && mysqli_num_rows($riders) > 0)
+          {
+              foreach($riders as $row) 
+              {
+                  echo "
+                  <tr>
+                      <td>{$row['usertype_id']}</td>
+                      <td>{$row['date']}</td>
+                      <td>{$row['name']}</td>
+                      <td>{$row['mobile']}</td>
+                      <td>{$row['email']}</td>
+                  </tr>";
+              }
+          }
+          ?>
+        </tbody>
+    </table>
+    </div>
+			</div>
     
 </main>
-</head>
 
 </body>
 </html>

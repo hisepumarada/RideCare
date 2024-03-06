@@ -108,7 +108,7 @@ $page = 'shopbook';
 				<div id="live_data"></div>  
 			</div>  
 		</div>
-        <script>  
+<script>  
 $(document).ready(function(){  
     function fetch_data()  
     {  
@@ -147,6 +147,7 @@ $(document).ready(function(){
             }  
         })  
     });
+    
 	function edit_data(id, text, column_name)  
     {  
         $.ajax({  

@@ -154,15 +154,13 @@ if (isset($_SESSION['usertype_id'])) {
 <li><a class="dropdown-item" href="userprofile.php">Profile Details</a></li>
 <li><a class="dropdown-item" href="userhistorymenu.php">Booking History</a></li>
 <li><a class="dropdown-item" href="userpaymentsmenu.php">Payment History</a></li>
-<li><a class="dropdown-item" href="usercoupons.php">Coupons</a></li>
+<li><a class="dropdown-item" href="uservehicle.php">Motorcycle Details</a></li>
 <li><a class="dropdown-item" href="userchangedetails.php">Account Settings</a></li>
 <li><hr class="dropdown-divider"></li>
 <li><a class="dropdown-item"href="../logout.php">Logout</a></li>
   </div>
 </div>
-        
-     
-    </header>
+</header>
   
   
 </main>

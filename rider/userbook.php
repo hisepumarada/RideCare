@@ -73,7 +73,7 @@ while($currentDay <= $numberDays){
   if($totalbookings==10){
           $calendar.="<td class='$today'><center><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-xs'>All Booked</a>";
         }else{
-            $availableslots = 10 - $totalbookings;
+            $availableslots = 99 - $totalbookings;
             $calendar.="<td class='$today'><center>
             <h3>$currentDay</h3> <a href='userbook.php?date=".$date."' class='btn btn-success btn-xs'>Book</a>
             <br>";
@@ -187,7 +187,7 @@ if (isset($_POST['submit'])) {
     $vehicle = mysqli_real_escape_string($conn, $_POST['vehicle']);
     $mobile = mysqli_real_escape_string($conn, $_POST['mobile']);
 
-    $select = mysqli_query($conn, "SELECT * FROM `appointment` WHERE usertype_id = $usertype_id AND status = 'pending' OR status = 'approve'") or die('query failed');
+    $select = mysqli_query($conn, "SELECT * FROM appointment WHERE usertype_id = $usertype_id AND status = 'pending' OR status = 'approve'") or die('query failed');
 
     if (mysqli_num_rows($select) > 0) {
         ?>
@@ -213,7 +213,7 @@ if (isset($_POST['submit'])) {
                 swal({
                     title: "Booking is Pending",
                     text: "Wait for the confirmation",
-                    icon: "warning",
+                    icon: "success",
                     button: "Okay",
                 }).then(function() {
                     window.location = "userhome.php";
@@ -235,76 +235,71 @@ if(mysqli_num_rows($select) > 0){
         <H3>APPOINTMENT DETAILS</H3><BR>
         <div class="form-group">  
             <label class="form-label">Selected Book Date</label><br>       
-            <input required class="form-control" id="date" name="date" type="text" value="<?php echo date('F d, Y', strtotime($date)); ?>"/>
+            <input readonly class="form-control" id="date" name="date" type="text" value="<?php echo date('F d, Y', strtotime($date)); ?>"/>
         </div>
         
             <div class="form-group"> 
             <label class="form-label">Enter your Full Name</label><br>
-            <input required class="form-control" id="name" name="name" type="text" value="<?php echo $fetch['firstname'] . ' ' . $fetch['lastname']; ?>"/>
+            <input readonly class="form-control" id="name" name="name" type="text" value="<?php echo $fetch['firstname'] . ' ' . $fetch['lastname']; ?>"/>
             </div>
 
             <div class="form-group">
             <label class="form-label">Enter your Email</label><br>
-            <input required class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" id="email" name="email" type="email" value="<?php echo $fetch['email']?>"/>
+            <input readonly class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" id="email" name="email" type="email" value="<?php echo $fetch['email']?>"/>
             </div>
                 
             <div class="form-group">
             <label  class="form-label">Enter your Phone Number</label><br>
-            <input required class="form-control" pattern="^(09|\+639)\d{9}$" id="mobile" name="mobile" type="mobile"  placeholder="Phone Number (09 or 639)" value="<?php echo $fetch['mobile']; ?>"/>
+            <input readonly class="form-control" pattern="^(09|\+639)\d{9}$" id="mobile" name="mobile" type="mobile"  placeholder="Phone Number (09 or 639)" value="<?php echo $fetch['mobile']; ?>"/>
             </div>
-        
-            <div class="form-group">
-            <label  class="form-label">Motorcycle Vehicle</label><br>
-            <select required class="form-select"  id="vehicle" name="vehicle">
-                <option class="col-md-8 fs-4" selected disabled hidden>Select Motorcycle</option>
-                <option value="Honda BeAT 110">Honda BeAT 110</option>
-                <option value="Honda Click 125">Honda Click 125</option>
-                <option value="Honda Click 150i">Honda Click 150i</option>
-                <option value="Honda AirBlade 160">Honda AirBlade 160</option>
-                <option value="Honda PCX 160">Honda PCX 160</option>
-                <option value="Honda X-ADV 750">Honda X-ADV 750</option>
-                <option value="Suzuki Address 115">Suzuki Address 115</option>
-                <option value="Suzuki Skydrive 125">Suzuki Skydrive 125</option>
-                <option value="Suzuki Burgman 400">Suzuki Burgman 400</option>
-                <option value="Yamaha Mio Sporty 115">Yamaha Mio Sporty 115</option>
-                <option value="Yamaha Mio i125">Yamaha Mio i125</option>
-                <option value="Yamaha Mio Soul i125">Yamaha Mio Soul i125</option>
-                <option value="Yamaha NMAX 155">Yamaha NMAX 155</option>
-                <option value="Yamaha Mio Aerox 155">Yamaha Mio Aerox 155</option>
-                <option value="Yamaha Tricity 125">Yamaha Tricity 125</option>
-                <option value="Yamaha XMAX 300">Yamaha XMAX 300</option>
-                <option value="Yamaha Tmax SX 530">Yamaha Tmax SX 530</option>
-            </select></div>
-        
+            <?php
+              $select = mysqli_query($conn, "SELECT * FROM vehicle WHERE usertype_id = '$usertype_id'") or die('query failed');
+              ?>
+              <div class="form-group">
+                  <label class="form-label">Motorcycle Vehicle</label><br>
+                  <select required class="form-select" id="vehicle" name="vehicle">
+                      <option class="col-md-8 fs-6" selected disabled>Select Vehicle</option>
+                      <?php
+                      // Check if any rows are returned
+                      if(mysqli_num_rows($select) > 0){
+                          // Loop through each row
+                          while($vehicle = mysqli_fetch_assoc($select)){
+                              // Output option for each vehicle
+                              echo '<option value="' . $vehicle['vehicle'] . '">' . $vehicle['vehicle'] . '</option>';
+                          }
+                      } else {
+                          // If no vehicles found
+                          echo '<option class="col-md-8 fs-4" disabled>No vehicles found</option>';
+                      }
+                      ?>
+                  </select>
+              </div>
+          
             <div class="form-group">
             <label  class="form-label">Service Request</label><br>
             <select required class="form-select" id="service" name="service">
-    <option class="col-md-8 fs-4" selected disabled hidden>Select Service</option>
-    <option value="ALIGN (WHEEL)">ALIGN (WHEEL)</option>
-    <option value="BAKLAS - ALIGN (WHEEL)">BAKLAS - ALIGN (WHEEL)</option>
-    <option value="BALLRACE INSTALLATION">BALLRACE INSTALLATION</option>
-    <option value="CARB CLEANING">CARB CLEANING</option>
-    <option value="CHANGE OIL">CHANGE OIL</option>
-    <option value="CLEANING OR REPLACE SPARKPLUG">CLEANING OR REPLACE SPARKPLUG</option>
-    <option value="CVT CLEANING">CVT CLEANING</option>
-    <option value="ENGINE TUNE-UP">ENGINE TUNE-UP</option>
-    <option value="FI CLEANING">FI CLEANING</option>
-    <option value="MAGNETO CLEANING AND PAINT">MAGNETO CLEANING AND PAINT</option>
-    <option value="OVERHAUL">OVERHAUL</option>
-    <option value="PARTS AND ACCESSORIES INSTALLATIONREPLACE CARBURATOR">PARTS AND ACCESSORIES INSTALLATIONREPLACE CARBURATOR</option>
-    <option value="REPLACE SHOCK">REPLACE SHOCK</option>
-    <option value="REPLACE SPEED CABLE">REPLACE SPEED CABLE</option>
-    <option value="REPLACE BRAKE CABLE">REPLACE BRAKE CABLE</option>
-    <option value="REPLACE CLUTCH CABLE">REPLACE CLUTCH CABLE</option>
-    <option value="REPLACE CLUTCH LINING">REPLACE CLUTCH LINING</option>
-    <option value="SHOCK SUSPENSION REPACK">SHOCK SUSPENSION REPACK</option>
-    <option value="TROTTLE BODY">TROTTLE BODY</option>
-    <option value="TUNE UP">TUNE UP</option>
-    <option value="TOP OVERHAUL">TOP OVERHAUL</option>
-    <option value="WIRING INSTALLATION">WIRING INSTALLATION</option>
-</select>
-</div><br>
-            <button class="btn btn-primary" type="submit" name="submit" >Submit</button>
+                <option class="col-md-8 fs-6" selected disabled>Select Service</option>
+              <?php
+                // Execute query to fetch options from the status table
+                $select = mysqli_query($conn, "SELECT * FROM service") or die('Query failed');
+
+                // Check if there are rows returned from the query
+                if(mysqli_num_rows($select) > 0) {
+                    // Loop through each row of the result set
+                    while($service = mysqli_fetch_assoc($select)) {
+                        // Print the option element for each row
+                        echo '<option value="' . $service['service'] . '">' . $service['service'] . '</option>';
+                    }
+                } else {
+                    // If no rows are returned, display a default option
+                    echo '<option disabled>No statuses found</option>';
+                }
+                ?>
+              </select>
+            </div>
+            <br>
+            <button class="btn btn-primary" type="submit" name="submit" style="float: right;">Submit</button>
+
             </div>
       </div>
     </div></form>   

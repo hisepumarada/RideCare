@@ -46,8 +46,18 @@ $page = 'shopriders';
 					</ul>
 				</div>
 			</div>
-<div class="table-data">
-     <div class="order">
+            <ul class="box-info">
+                    <li>
+                        <i class='bx bxs-calendar-check'></i>
+                        <span class="text">
+                        <p>For Approval Riders</p>
+                        <a type="button" style="color: black;" class="btn btn-outline-primary" href="shopapprovalrider.php">Click for details</a>
+                        </span>
+                    </li>
+        </ul>
+        <div class="table-data">
+                <div class="order">
+                  
         <table id="example" class="table table-striped" style="width:100%">
         <thead>
             <tr>

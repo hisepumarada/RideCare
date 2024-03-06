@@ -87,40 +87,37 @@ $usertype_id = $_SESSION['usertype_id'];
         padding:20px;
     }
 }
+
 </style>
 
 <body>
 <?php include '../inc/header.php'; ?> 
 <div class="container">
 <br><br>
-    <h1 class="heading">PAYMENT HISTORY</h1>
+    <h1 class="heading">PAYMENT HISTORY</h1> 
 <br><br>
+<div class="box-container">
 <?php
-$booked_vehicles = array(); // Array to store already booked vehicles
+$booked_vehicles = array(); 
 
 $book = mysqli_query($conn, "SELECT * FROM payment WHERE usertype_id='$usertype_id'") or die(mysqli_error($conn));
 
 if ($book && mysqli_num_rows($book) > 0) {
     foreach ($book as $row) {
         $vehicle = $row['vehicle'];
-        
-        // Check if the vehicle has already been displayed
         if (!in_array($vehicle, $booked_vehicles)) {
-            // Add the vehicle to the list of displayed vehicles
             $booked_vehicles[] = $vehicle;
 ?>
-            <div class="box-container">
                 <div class="box">
                     <h3><?php echo $vehicle; ?></h3>
                     <a href='userpayments.php?vehicle=<?php echo $vehicle; ?>' class="btn">Read More</a>
                 </div>
-            </div>
-            <br><br>
 <?php
         }
     }
 }
 ?>
+</div>
 </div>
 <br><br><br><br>
 <?php  include '../inc/footer.php';   ?>

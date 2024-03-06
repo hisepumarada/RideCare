@@ -1,28 +1,31 @@
 <?php 
 session_start();
 include "../db_conn.php";
-$usertype_id = $_SESSION['usertype_id'];
+$usertype_id = $_SESSION['usertype_id']; 
+
+
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang ="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RideCare: Booking History</title>
     <!-- Link to CSS-->
     <link rel="stylesheet" href="../css/style.css">
     <!--Box Icons-->
+    <!--Box Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.css" rel="stylesheet">
     <script defer src="script.js"></script>
-    <title>RideCare: Maintenance Due</title>
 </head>
+
 <style>
 
 
@@ -78,26 +81,24 @@ $usertype_id = $_SESSION['usertype_id'];
         }
       }
 </style>
-
 <body>
 <?php include '../inc/header.php'; ?> 
 <br><br><center>
-<h1>MAINTENANCE DUE</h1></center><BR></BR>
+<h1>RECENT APPOINTMENT</h1></center><BR></BR>
 <div class="container">
         <div class="tbl_container">
         <table class="tbl">
             <thead>
             <tr>
-          <th> MAINTENANCE ID </th>    
+          <th>  ID </th>    
           <th> Appointment Date </th> 
-          <th> Vehicle </th> 
-		  <th> Odometer </th> 
           <th> Service </th>
-          <th> Action </th>
+		  <th> Status </th> 
+          <th> Remarks </th>
                </tr>
                <tbody>
                <?php 
-        $book = mysqli_query($conn,"SELECT * FROM maintenance WHERE usertype_id='$usertype_id'") or die(mysqli_error($conn));
+        $book = mysqli_query($conn,"SELECT * FROM appointment WHERE usertype_id='$usertype_id' AND (status='closed' OR status='pending' OR status='holiday')") or die(mysqli_error($conn));
         if($book)
         {
             if(mysqli_num_rows($book) > 0)
@@ -106,12 +107,22 @@ $usertype_id = $_SESSION['usertype_id'];
                 {
              ?>    
         <tr> 
-                  <td><?= $row['maintenance_id']; ?></td> 
+                  <td><?= $row['appointment_id']; ?></td> 
                   <td><?= $row['date']; ?></td> 
-                  <td><?= $row['vehicle']; ?></td> 
-                  <td><?= $row['odometer']; ?></td>  
                   <td><?= $row['service']; ?></td> 
-                  <td></td> 
+                  <td><?= $row['status']; ?></td>  
+                  <td><?php
+                    if ($row['status'] == 'Closed') {
+                        echo 'Sorry, today is closed. Book another Day';
+                    } elseif ($row['status'] == 'Holiday') {
+                        echo 'Sorry, today is holiday. Book another Day';
+                    } elseif ($row['status'] == 'pending') {
+                        echo 'Wait For Approval';
+                    } else {
+                        // If status is neither 'closed' nor 'holiday', do nothing.
+                        // You may add additional conditions/messages here if needed.
+                    }
+                    ?></td>
               </tr>
               <?php }}}?>
             </tbody>

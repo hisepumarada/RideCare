@@ -19,9 +19,10 @@ $usertype_id = $_SESSION['usertype_id'];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script> 
     <script defer src="script.js"></script>
-    <title>RideCare: Maintenance Due</title>
+    <title>RideCare: Rider Motorcycle Vehicle</title>
 </head>
 <style>
 
@@ -82,22 +83,21 @@ $usertype_id = $_SESSION['usertype_id'];
 <body>
 <?php include '../inc/header.php'; ?> 
 <br><br><center>
-<h1>MAINTENANCE DUE</h1></center><BR></BR>
+<h1>COMPLETED APPOINTMENTS DETAILS</h1></center><BR></BR>
 <div class="container">
         <div class="tbl_container">
         <table class="tbl">
             <thead>
             <tr>
-          <th> MAINTENANCE ID </th>    
-          <th> Appointment Date </th> 
-          <th> Vehicle </th> 
-		  <th> Odometer </th> 
-          <th> Service </th>
-          <th> Action </th>
+          <th> APPOINTMENT ID </th>    
+          <th> APPOINTMENT DATE </th> 
+          <th> VEHICLE </th> 
+          <th> SERVICE </th> 
+          <th> MECHANIC </th>
                </tr>
                <tbody>
                <?php 
-        $book = mysqli_query($conn,"SELECT * FROM maintenance WHERE usertype_id='$usertype_id'") or die(mysqli_error($conn));
+        $book = mysqli_query($conn,"SELECT * FROM appointment WHERE usertype_id='$usertype_id' AND status='complete'") or die(mysqli_error($conn));
         if($book)
         {
             if(mysqli_num_rows($book) > 0)
@@ -106,18 +106,18 @@ $usertype_id = $_SESSION['usertype_id'];
                 {
              ?>    
         <tr> 
-                  <td><?= $row['maintenance_id']; ?></td> 
+                  <td><?= $row['appointment_id']; ?></td> 
                   <td><?= $row['date']; ?></td> 
                   <td><?= $row['vehicle']; ?></td> 
-                  <td><?= $row['odometer']; ?></td>  
-                  <td><?= $row['service']; ?></td> 
-                  <td></td> 
+                  <td><?= $row['service']; ?></td>  
+                  <td><?= $row['mechanic']; ?></td>  
               </tr>
               <?php }}}?>
             </tbody>
         </table>
         </div>
     </div>
+
     <br><br>    <br><br>
     <?php include "../inc/footer.php"; ?>  
 </body>

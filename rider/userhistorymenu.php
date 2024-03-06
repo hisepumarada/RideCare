@@ -87,36 +87,75 @@ $usertype_id = $_SESSION['usertype_id'];
         padding:20px;
     }
 }
+.button-30 {
+  align-items: center;
+  appearance: none;
+  background-color: #FCFCFD;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #36395A;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono",monospace;
+  height: 48px;
+  justify-content: flex-end; 
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 18px;
+}
+
+.button-30:focus {
+  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+}
+
+.button-30:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.button-30:active {
+  box-shadow: #D6D6E7 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
 </style>
 
 <body>
 <?php include '../inc/header.php'; ?> 
 <div class="container">
 <br><br>
-    <h1 class="heading">BOOKING DETAILS</h1>
+    <a class="button-30" role="button" href="usercoupons.php">Coupons</a> &nbsp;  
+    <a class="button-30" role="button" href="userdue.php">Due Maintenance</a> &nbsp;  
+    <a class="button-30" role="button"  href="userbookhistory.php">All Appointment</a> &nbsp;  
+    <a class="button-30" role="button" href="usercompletebook.php">Complete Appointent</a> 
 <br><br>
     <div class="box-container">
 
         <div class="box">
-            <h3>BOOKING HISTORY</h3>
-            <p>Body plastic cover replacement involves the removal of damaged or existing plastic panels on a 
-                motorcycle and their replacement with new ones.</p>
-            <a href="userbookhistory.php" class="btn">Read More</a>
+            <br><br><br>
+            <h1>RECENT APPOINTMENT</h1>
+            <br>
+            <a href="userrecenthistory.php" class="btn">Read More</a>
+            <br><br>
         </div>
-        <div class="box">
-            <h3>MAINTENANCE DUE</h3>
-            <p>Brake shoe/pad replacement is an essential part of motorcycle maintenance, as it ensures that your 
-            brakes remain effective and safe.</p>
-            <a href="userdue.php" class="btn">Read More</a>
-        </div>
-        <div class="box">
-            <h3>MOTORCYCLE VEHICLE</h3>
-            <p>Brake shoe/pad replacement is an essential part of motorcycle maintenance, as it ensures that your 
-            brakes remain effective and safe.</p>
-            <a href="uservehicle.php" class="btn">Read More</a>
-        </div>
-
     </div>
+
+    
+    
 
 </div>
 <br><br><br><br>
