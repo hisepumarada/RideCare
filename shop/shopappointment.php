@@ -67,7 +67,7 @@ $page = 'shopbook';
       }else{
         echo '<h3> NO PENDING </h3>';
       }
-      ?><a type="button" style="color: black;" class="btn btn-outline-primary" href="shopapproval.php">Click for details</a>
+      ?><a type="button" style="color: black;" class="btn btn-outline-primary" href="shopapprovalbook.php">Click for details</a>
 					</span>
 				</li>
 				<li>
