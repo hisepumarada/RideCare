@@ -2,7 +2,10 @@
 session_start();
 include "../db_conn.php";
 $usertype_id = $_SESSION['usertype_id']; 
-
+if (isset($_SESSION['usertype_id'])) {}else{
+    header("Location: ../index.php");
+    exit();
+}
 
 ?>
 <!DOCTYPE html>
