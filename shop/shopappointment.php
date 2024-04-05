@@ -111,7 +111,6 @@ $page = 'shopbook';
                   <th>Vehicle</th>
                   <th>Service</th>
                   <th>Status</th>
-                  <th>Action</th>
               </tr>
           </thead>
           <tbody>
@@ -123,15 +122,11 @@ $page = 'shopbook';
                   foreach($query_run as $row) {
               ?>
               <tr>
-                  <td>&nbsp;&nbsp;&nbsp;&nbsp;<?= $row['id']; ?></td>
+                  <td>&nbsp;&nbsp;&nbsp;&nbsp;<?= date('F j, Y', strtotime($row['date'])); ?></td>
                   <td>&nbsp;&nbsp;&nbsp;&nbsp;<?= $row['name']; ?></td>
                   <td>&nbsp;&nbsp;&nbsp;&nbsp;<?= $row['vehicle']; ?></td>
                   <td>&nbsp;&nbsp;&nbsp;&nbsp;<?= $row['service']; ?></td>
                   <td><?= $row['status']; ?></td>
-                  <td>
-                      <button class="btn btn-primary" onclick="getService(<?= $row['id']; ?>)"><i class="bx bx-edit"></i></button>
-                      <button class="btn btn-danger" onclick="deleteService(<?= $row['id']; ?>)"><i class="bx bx-trash"></i></button>
-                  </td>
               </tr>
               <?php
                   }

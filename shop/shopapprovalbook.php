@@ -127,15 +127,13 @@ $page = 'shopbook';
                     <td><?php echo $row['name']; ?></td>
                     <td><?php echo $row['mobile']; ?></td>
                     <td>
-                        <button class="btn btn-success" onclick="getBook(<?= $row['id']; ?>)"><i class="bx bx-check">&nbsp;Approve</i></button>
-                        <button class="btn btn-danger" onclick="getrejectBook(<?= $row['id']; ?>)"><i class="bx bx-x-circle">&nbsp;Close</i></button>
+                        <button class="btn btn-success" onclick="getBook(<?= $row['id']; ?>)"><i class="bx bx-check"></i>&nbsp;Approve</button>
+                        <button class="btn btn-danger" onclick="getrejectBook(<?= $row['id']; ?>)"><i class="bx bx-x-circle"></i>&nbsp;Close</button>
                     </td>
                 </tr>
                 <?php
                     }
-                } else {
-                    echo "<tr><td colspan='6' class='text-center'>No Record Found</td></tr>";
-                }
+                } 
                 ?> 
     </tbody>
 </table>

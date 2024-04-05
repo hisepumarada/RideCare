@@ -442,7 +442,7 @@ input {
         <svg class="bi me-2" width="40" height="50" role="img" aria-label="Bootstrap"><img src="css/images/ridecare-high-resolution-logo-transparent.png"  width="200" height="40" ></svg>
       </a>
       <div class="col-md-3 text-end">
-        <a type="button" class="btn btn-outline-primary" href="index.php">Login</a>
+        <a type="button" class="btn btn-outline-primary" href="login.php">Login</a>
       </div>
     </header>
   </div>

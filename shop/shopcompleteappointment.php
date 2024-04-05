@@ -50,7 +50,6 @@ $page = 'shopbook';
                 <th>Mobile</th>
                 <th>Vehicle</th>
                 <th>Service</th>
-                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -63,13 +62,12 @@ if($riders && mysqli_num_rows($riders) > 0)
     {
         echo "
         <tr>
-            <td>{$row['id']}   </td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$row['id']}   </td>
             <td>{$row['date']}&nbsp;</td>
             <td>{$row['name']}&nbsp;</td>
             <td>{$row['mobile']}&nbsp;&nbsp;</td>
             <td>{$row['vehicle']}</td>
             <td>{$row['service']}</td>
-            <td>&nbsp;&nbsp;<a class='btn btn-primary mr-3' href='shopallappointmentedit.php?appointment_id={$row['id']}'>EDIT</a></td>
         </tr>
         ";
     }

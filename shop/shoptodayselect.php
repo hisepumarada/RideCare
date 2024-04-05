@@ -1,7 +1,7 @@
 <?php
 include "../db_conn.php";
 $output = '';
-$sql = "SELECT * FROM appointment WHERE date = CURDATE() AND status = 'approve'";
+$sql = "SELECT * FROM appointment WHERE date = CURDATE() AND status = 'approved'";
 $result = mysqli_query($conn, $sql);
 $output .= '<style>.kaliwa { float: left; }</style> 
             <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

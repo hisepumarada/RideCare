@@ -288,7 +288,7 @@ if(mysqli_num_rows($select) > 0){
                     // Loop through each row of the result set
                     while($service = mysqli_fetch_assoc($select)) {
                         // Print the option element for each row
-                        echo '<option value="' . $service['service'] . '">' . $service['service'] . '</option>';
+                        echo '<option value="' . $service['name'] . '">' . $service['name'] . '</option>';
                     }
                 } else {
                     // If no rows are returned, display a default option

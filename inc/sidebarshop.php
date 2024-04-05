@@ -649,7 +649,7 @@ body {
 }
 </style>
 
-<section id="sidebar" class="hide">
+<section id="sidebar">
 		<a href="#" class="brand">
 			<i class='bx bx-cycling'></i>
 			<span class="text">RideCare (SHOP)</span>
@@ -659,6 +659,11 @@ body {
 			<a href="shopdashboard.php">
 			<i class='bx bxs-dashboard' ></i>
 			<span class="text">Dashboard</span></a>
+		</li>
+		<li class="<?php if($page=='shopbook'){echo 'active';}?>">
+			<a href="shopappointment.php">
+			<i class='bx bxs-calendar'></i>
+			<span class="text">Appointment</span></a>
 		</li>
 		<li class="<?php if($page=='shopreports'){echo 'active';}?>">
 				<a href="shopreports.php">
@@ -680,11 +685,6 @@ body {
 			<a href="shopservice.php">
 			<i class='bx bxs-cog' ></i>
 			<span class="text">Service</span></a>
-		</li>
-		<li class="<?php if($page=='shopbook'){echo 'active';}?>">
-			<a href="shopappointment.php">
-			<i class='bx bxs-calendar'></i>
-			<span class="text">Appointment</span></a>
 		</li>
 		<li class="<?php if($page=='shopteam'){echo 'active';}?>">
 			<a href="shopteam.php">

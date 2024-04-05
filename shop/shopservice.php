@@ -63,7 +63,7 @@ $page = 'shopservice';
                     foreach($query_run as $row) {
                 ?>
                 <tr>
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;<?= $row['service']; ?></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;<?= $row['name']; ?></td>
                     <td><?= $row['status']; ?></td>
                     <td>
                         <button class="btn btn-primary" onclick="getService(<?= $row['id']; ?>)"><i class="bx bx-edit"></i></button>
