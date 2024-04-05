@@ -24,36 +24,72 @@ $page = 'shopriders';
 <?php include "../inc/sidebarshop.php"; ?>
 </head>
 <style>
+/* General styles */
+.form {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.form h1 {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.form label {
+    font-weight: bold;
+}
+
+.form input[type="text"],
+.form input[type="tel"],
+.form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form input[type="file"] {
+    margin-top: 10px;
+}
+
+.form .row {
+    margin-bottom: 15px;
+}
+
+/* Image section styles */
+#img-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .img {
-            width: 300px; /* Set the width as per your requirement */
-            height: auto; /* Maintain aspect ratio */
-        }
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
 
-     
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
+.message {
+    color: red;
+    margin-top: 5px;
+}
 
-        input {
-            width: 50%;
-            padding: 8px;
-            margin-bottom: 16px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
+/* Responsive styles */
+@media (max-width: 768px) {
+    .form {
+        padding: 10px;
+    }
+}
 
-        button {
-            background-color: #4caf50;
-            color: #fff;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
     </style>
 <body>	
 
@@ -82,9 +118,9 @@ $page = 'shopriders';
 				</div>
 			</div>
 
-            <div class="table-data">
-				<div class="order">
-			<form id="form signup" action="" method="POST" class="form" enctype="multipart/form-data">
+<div class="table-data">
+	<div class="order">
+<form id="form signup" action="" method="POST" class="form" enctype="multipart/form-data">
     <h1 class="pb-4 border-bottom">Motorcycle Vehicle</h1>
     <div class="d-flex align-items-start py-3 border-bottom">
     <?php
@@ -104,50 +140,37 @@ $page = 'shopriders';
          if(isset($message)){
             foreach($message as $message){
                echo '<div class="message">'.$message.'</div>'; } } ?> 
-        <div class="pl-sm-4 pl-2" id="img-section">
-            <b>Profile Photo</b>
-            <p>Accepted file type .png. Less than 1MB</p>
-            <input class="btn button border" type="file" name="update_image" accept="image/jpg, image/jpeg, image/png" class="box"></input>
-        </div></div>
+</div>
     <div class="py-2">
         <div class="row py-2">
             <div class="col-md-6">
                 <label for="fname">First Name</label>
-                <input required class="bg-light form-control" id="update_fname" name="update_fname" type="text" value="<?php echo $fetch['firstname'];?>">
+                <input readonly class="bg-light form-control" id="update_fname" name="update_fname" type="text" value="<?php echo $fetch['firstname'];?>">
             </div>
             <div class="col-md-6 pt-md-0 pt-3">
                 <label for="lname">Last Name</label>
-                <input required class="bg-light form-control" id="update_lname" name="update_lname" type="text" value="<?php echo $fetch['lastname'];?>">
+                <input readonly class="bg-light form-control" id="update_lname" name="update_lname" type="text" value="<?php echo $fetch['lastname'];?>">
             </div>
         </div>
         <div class="row py-2">
             <div class="col-md-6">
                 <label for="mobile">Mobile Number</label>
-                <input required class="bg-light form-control" id="update_mobile" name="update_mobile" type="tel" pattern="[0]{1}[0-9]{10}" value="<?php echo $fetch['mobile'];?>">
+                <input readonly class="bg-light form-control" id="update_mobile" name="update_mobile" type="tel" pattern="[0]{1}[0-9]{10}" value="<?php echo $fetch['mobile'];?>">
             </div>
             <div class="col-md-6 pt-md-0 pt-3">
                 <label for="email">Email Address</label>
-                <input required class="bg-light form-control" id="update_email" name="update_email" type="text"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" value="<?php echo $fetch['email'];?>">
+                <input readonly class="bg-light form-control" id="update_email" name="update_email" type="text"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" value="<?php echo $fetch['email'];?>">
             </div>
         </div>
         <div class="row py-2">
 		<div class="col-md-6">
                 <label for="address">Home Address</label>
-                <input required class="bg-light form-control" id="update_address" name="update_address" type="text" value="<?php echo $fetch['address'];?>">
+                <input readonly class="bg-light form-control" id="update_address" name="update_address" type="text" value="<?php echo $fetch['address'];?>">
             </div>
         <div class="col-md-6 pt-md-0 pt-3">
             <label for="gender">Gender</label>
-            <select required name="update_gender" class="bg-light form-control">
-            <option selected><?php echo $fetch['gender'];?></option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Others">Others</option>
-            </select>
+            <input readonly class="bg-light form-control" id="update_address" name="update_address" type="text" value="<?php echo $fetch['gender'];?>">
          </div>
-        </div>
-        <div class="py-3 pb-4 border-bottom">
-        <button class="btn btn-primary mr-3" type="submit" value="update_profile" name="update_profile">Save Changes</button>
-      <button class="btn border button">Cancel</button>
         </div>
     </div>
     </form>
@@ -155,52 +178,8 @@ $page = 'shopriders';
     }
 ?>
 </div>
-			</div> 
-		
-<?php
-if (isset($_POST['update_profile'])){
-
-   $update_fname = mysqli_real_escape_string($conn, $_POST['update_fname']); 
-   $update_lname = mysqli_real_escape_string($conn, $_POST['update_lname']);
-   $update_mobile = mysqli_real_escape_string($conn, $_POST['update_mobile']);
-   $update_email = mysqli_real_escape_string($conn, $_POST['update_email']);
-   $update_address = mysqli_real_escape_string($conn, $_POST['update_address']);
-   $update_gender = mysqli_real_escape_string($conn, $_POST['update_gender']);    
- 
-    mysqli_query($conn, "UPDATE `user` SET firstname = '$update_fname', lastname = '$update_lname',
-    mobile = '$update_mobile', email = '$update_email' , address = '$update_address' , gender = '$update_gender' WHERE usertype_id = '$usertype_id'") or die('query failed');
-     ?>
-     <script>
-     swal({
-      title: "Rider Update is Success",
-      text: "",
-      icon: "success",
-      button: "Okay!",
-   }).then(function() {
-    window.location = "shopinforider.php?usertype_id=<?php echo $fetch['usertype_id'];?>";
-});
-    </script>  
-<?php
-
-
-   $update_image = $_FILES['update_image']['name'];
-   $update_image_size = $_FILES['update_image']['size'];
-   $update_image_tmp_name = $_FILES['update_image']['tmp_name'];
-   $update_image_folder = 'uploaded_img/'.$update_image;
-
-if(!empty($update_image)){
-   if($update_image_size > 20000000000000){
-      $message[] = 'image is too large';
-   }else{
-      $image_update_query = mysqli_query($conn, "UPDATE `user` SET image = '$update_image' WHERE usertype_id = '$usertype_id'") or die('query failed');
-      if($image_update_query){
-         move_uploaded_file($update_image_tmp_name, $update_image_folder);
-      }
-      
-   }
-}
-}
- ?>
+</div> 
+	
 </head>
 <body>
     

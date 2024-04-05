@@ -87,7 +87,7 @@ if(mysqli_num_rows($select) > 0){
 		<li>
 					<i class='bx bxs-calendar' ></i>
 					<span class='text'>
-					<h3>COMPLETE APPOINTMENTS</h3>
+					<h3>BOOKING APPOINTMENTS</h3>
                     <a type='button' style='color: black;' class='btn btn-outline-primary' href='shopbookrider.php?usertype_id=<?php echo $usertype_id; ?>'>Click for details</a>
 					</span>
 				</li>

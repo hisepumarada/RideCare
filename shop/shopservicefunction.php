@@ -4,15 +4,15 @@ include "../db_conn.php"; // Include your database connection file
 // Handle GET requests
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // Check if the action parameter is set and equal to 'getService'
-    if (isset($_GET['action']) && $_GET['action'] === 'getBook') {
+    if (isset($_GET['action']) && $_GET['action'] === 'getService') {
         // Handle the getService action
         if (isset($_GET['id'])) {
             // Call the getService function with the provided id
             $id = $_GET['id'];
-            $book = getBook($id);
+            $service = getService($id);
 
             // Return the service data as JSON response
-            echo json_encode($book);
+            echo json_encode($service);
         } else {
             // Return an error message if id parameter is not set
             echo json_encode(['error' => 'Id parameter is missing']);
@@ -25,19 +25,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 // Handle POST requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if the action parameter is set and equal to 'rejectBook'
-    if (isset($_POST['action']) && $_POST['action'] === 'rejectBook') {
-        // Handle the rejectBook action
-        if (isset($_POST['id'])) {
+    // Check if the action parameter is set and equal to 'addService'
+    if (isset($_POST['action']) && $_POST['action'] === 'addService') {
+        // Handle the addService action
+        if (isset($_POST['formData'])) {
             // Get the form data
-            $id = $_POST['id'];
-            rejectBook($id);
-
-            // Prepare the response
-            $response = ["success" => "Service rejected successfully"];
-
-            // Output the JSON response
-            echo json_encode($response);
+            $formData = $_POST['formData'];
+            $service = $formData['service'];
+            $created = $formData['created'];
+            $status = $formData['status'];
+            
+            addService($service, $created, $status);
+            echo json_encode(["success" => "Service added successfully"]);
         } else {
             // Return an error message if formData is missing
             echo json_encode(['error' => 'Form data is missing']);
@@ -48,16 +47,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+
 // Handle POST requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if the action parameter is set and equal to 'editService'
-    if (isset($_POST['action']) && $_POST['action'] === 'approveBook') {
+    if (isset($_POST['action']) && $_POST['action'] === 'editService') {
         // Handle the editService action
-        if (isset($_POST['id']) && isset($_POST['mechanic'])) {
+        if (isset($_POST['id']) && isset($_POST['status'])) {
             // Call the editService function with the provided id and status
             $id = $_POST['id'];
-            $mechanic = $_POST['mechanic'];
-            approveBook($id, $mechanic);
+            $status = $_POST['status'];
+            editService($id, $status);
         } else {
             // Return an error message if id or status parameters are missing
             echo json_encode(['error' => 'Id or status parameter is missing']);
@@ -67,7 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['error' => 'Invalid POST request']);
     }
 }
-
 
 // Handle DELETE requests
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
@@ -90,13 +89,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 }
 
 
+function addService($service, $created, $status) {
+    global $conn;
+
+    // Sanitize input to prevent SQL injection
+    $service = mysqli_real_escape_string($conn, $service);
+    $created = mysqli_real_escape_string($conn, $created);
+    $status = mysqli_real_escape_string($conn, $status);
+
+    // Your SQL query to insert data into the service table
+    $sql = "INSERT INTO service (service, created, status) VALUES ('$service', '$created', '$status')";
+
+    if (mysqli_query($conn, $sql)) {
+        echo json_encode(["success" => "Service added successfully"]);
+    } else {
+        echo json_encode(["error" => "Error adding service: " . mysqli_error($conn)]);
+    }
+}
+
+
 // Define the getService function
-function getBook($id) {
+function getService($id) {
     global $conn;
     $id = mysqli_real_escape_string($conn, $id);
 
     // Your SQL query to select the service
-    $sql = "SELECT * FROM appointment WHERE id = $id";
+    $sql = "SELECT * FROM service WHERE id = $id";
 
     // Execute the query
     $result = mysqli_query($conn, $sql);
@@ -112,27 +130,13 @@ function getBook($id) {
 }
 
 // Define the editService function
-function approveBook($id, $mechanic) {
+function editService($id, $status) {
     global $conn;
 
     $id = mysqli_real_escape_string($conn, $id);
-    $mechanic = mysqli_real_escape_string($conn, $mechanic);
+    $status = mysqli_real_escape_string($conn, $status);
 
-    $sql = "UPDATE appointment SET mechanic = '$mechanic', status = 'approved' WHERE id = $id";
-
-    if (mysqli_query($conn, $sql)) {
-        echo json_encode(["success" => "Service updated successfully"]);
-    } else {
-        echo json_encode(["error" => "Error updating service: " . mysqli_error($conn)]);
-    }
-}
-
-function rejectBook($id) {
-    global $conn;
-
-    $id = mysqli_real_escape_string($conn, $id);
-
-    $sql = "UPDATE appointment SET status = 'closed' WHERE id = $id";
+    $sql = "UPDATE service SET status = '$status' WHERE id = $id";
 
     if (mysqli_query($conn, $sql)) {
         echo json_encode(["success" => "Service updated successfully"]);

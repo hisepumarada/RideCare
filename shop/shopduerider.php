@@ -84,7 +84,7 @@ $page = 'shopriders';
                 $rider = mysqli_fetch_array($query_run);
                 ?>
                 <tr>
-                    <td><?php echo $rider['appointment_id']; ?></td>
+                    <td><?php echo $rider['id']; ?></td>
                     <td><?php echo $rider['date']; ?></td>
                     <td><?php echo $rider['name']; ?></td>
                     <td><?php echo $rider['mobile']; ?></td>

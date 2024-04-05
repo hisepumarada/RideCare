@@ -36,21 +36,7 @@ $page = 'shopreports';
 <?php include '../inc/sidebarshop.php';  ?>
 
 <main>
-			<div class="head-title">
-				<div class="left">
-					<h1>Reports</h1>
-					<ul class="breadcrumb">
-						<li>
-							<a href="#">Dashboard</a>
-						</li>
-						<li><i class='bx bx-chevron-right' ></i></li>
-						<li>
-							<a class="active" href="shopreports.php">Reports</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-
+  <h1>REPORTS</h1>
 			<ul class="box-info">
 				<li>
 					<i class='bx bxs-calendar-check' ></i>

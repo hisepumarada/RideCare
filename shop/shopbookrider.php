@@ -63,11 +63,7 @@ $page = 'shopriders';
         <table id="example" class="table table-striped" style="width:100%">
         <thead>
             <tr>
-                <th>Payment ID</th>
                 <th>Date</th>
-                <th>Name</th>
-                <th>Mobile</th>
-                <th>Email</th>
                 <th>Service</th>
                 <th>Status</th>
             </tr>
@@ -85,11 +81,7 @@ $page = 'shopriders';
                 $rider = mysqli_fetch_array($query_run);
                 ?>
                 <tr>
-                    <td><?php echo $rider['appointment_id']; ?></td>
-                    <td><?php echo $rider['date']; ?></td>
-                    <td><?php echo $rider['name']; ?></td>
-                    <td><?php echo $rider['mobile']; ?></td>
-                    <td><?php echo $rider['email']; ?></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo date('F j, Y', strtotime($rider['date'])); ?></td>
                     <td><?php echo $rider['service']; ?></td>  
                     <td><?php echo $rider['status']; ?></td>   
                      

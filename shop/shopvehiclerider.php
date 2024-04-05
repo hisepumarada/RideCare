@@ -20,7 +20,7 @@ $page = 'shopriders';
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 <?php include "../inc/sidebarshop.php"; ?>
 </head>	
 <style>
@@ -80,30 +80,15 @@ $page = 'shopriders';
 						</li>	
 					</ul>
 				</div>
-                <?php 
-    if(isset($_GET['usertype_id']))
-    {
-        $usertype_id = mysqli_real_escape_string($conn, $_GET['usertype_id']);
-        ?>
-				<a href='shopvehiclecreate.php?usertype_id=<?php echo $usertype_id; ?>' class="btn-download">
-					<i class='bx bx-add-to-queue' ></i>
-					<span class="text">ADD MOTORCYCLE VEHICLE</span>
-				</a>
-			</div>
-            <?php
-    }
-?>
 			</div>
             
 
 			<div class="table-data">
 				<div class="order">
 				<table id="example" class="table table-striped" style="width:100%">
-				<h1>Motorcycle Vehicle</h1>
 				<br>
         <thead>
             <tr>
-                <th>Vehicle ID</th>
                 <th>Purchase Date</th>
                 <th>Plate Number</th>
                 <th>Vehicle</th>
@@ -121,8 +106,7 @@ $page = 'shopriders';
         while($rider = mysqli_fetch_array($query_run)) {
             ?>
                 <tr>
-                    <td><?php echo $rider['vehicle_id'];?></td>
-                    <td><?php echo $rider['purchasedate'];?></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo date('F j, Y', strtotime($rider['purchasedate'])); ?></td>
                     <td><?php echo $rider['platenumber'];?></td>
                     <td><?php echo $rider['vehicle'];?></td>
                     <td><?php echo $rider['color']; ?></td>  
@@ -132,10 +116,23 @@ $page = 'shopriders';
         }
         ?>
         </tbody>
-    </table>
-				</div>
-			</div>
-    
+</table>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+         $(document).ready(function() {
+            // DataTable initialization
+            var table = $('#example').DataTable();
+
+        });
+</script>   
 
 </body>
 </html>

@@ -37,21 +37,7 @@ $page = 'shopbook';
 <?php include '../inc/sidebarshop.php';  ?>
 
 <main>
-			<div class="head-title">
-				<div class="left">
-					<h1>Appointment</h1>
-					<ul class="breadcrumb">
-						<li>
-							<a href="#">Dashboard</a>
-						</li>
-						<li><i class='bx bx-chevron-right' ></i></li>
-						<li>
-							<a class="active" href="shopappointment.php">Appointment</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-
+  <h1>APPOINTMENTS</h1>
 			<ul class="box-info">
 				<li>
 					<i class='bx bxs-calendar-plus' ></i>
@@ -75,7 +61,7 @@ $page = 'shopbook';
 					<span class="text">
                     <p>For Today Books</p>
 					<?php
-	  $dash_post_query = "SELECT * FROM appointment WHERE status = 'approve' AND date =CURDATE()";
+	  $dash_post_query = "SELECT * FROM appointment WHERE status = 'approved' AND date =CURDATE()";
       $dash_post_query = mysqli_query($conn, $dash_post_query);
       if($post_total = mysqli_num_rows($dash_post_query))
       {
@@ -90,9 +76,9 @@ $page = 'shopbook';
                 <li>
 					<i class='bx bx-calendar' ></i>
 					<span class="text">
-                    <p>All Booking Appointment</p>
+                    <p>All Completed Appointment</p>
 					<?php
-      $dash_post_query = "SELECT * FROM appointment";
+      $dash_post_query = "SELECT * FROM appointment WHERE status='completed'";
       $dash_post_query = mysqli_query($conn, $dash_post_query);
 
       if($post_total = mysqli_num_rows($dash_post_query))
@@ -101,52 +87,77 @@ $page = 'shopbook';
     <h3>'.$post_total.' </h3>
 		';
       }else{
-        echo '<h3> NO ON GOING BOOKING </h3>';
+        echo '<p> NO COMPLETED BOOKING </p>';
       }
-      ?><a type="button" style="color: black;" class="btn btn-outline-primary" href="shopallappointment.php">Click for details</a>
+      ?><a type="button" style="color: black;" class="btn btn-outline-primary" href="shopcompleteappointment.php">Click for details</a>
 					</span>
 				</li>
 			</ul>
 
-      <div class="table-data">
-     <div class="order">
-      <H1>COMPLETED APPOINTMENT</H1>
-      <br><br>
-        <table id="example" class="table table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>RIDER ID</th>
-                <th>DATE</th>
-                <th>NAME</th>
-                <th>Mobile</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php 
-          $riders = mysqli_query($conn, "SELECT * FROM appointment WHERE status = 'complete'") or die(mysqli_error($conn));
 
-          if($riders && mysqli_num_rows($riders) > 0)
-          {
-              foreach($riders as $row) 
-              {
-                  echo "
-                  <tr>
-                      <td>{$row['usertype_id']}</td>
-                      <td>{$row['date']}</td>
-                      <td>{$row['name']}</td>
-                      <td>{$row['mobile']}</td>
-                      <td>{$row['email']}</td>
-                  </tr>";
+
+<div class="table-data">
+  <div class="order">
+      <div class="head">
+      <br><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <h1>ALL OF RideCare Appointments</h1>
+      </div>
+      <table id="example" class="table table-striped" style="width:100%">
+          <thead>
+              <tr>
+                  <th>Appointment</th>
+                  <th>Name</th>
+                  <th>Vehicle</th>
+                  <th>Service</th>
+                  <th>Status</th>
+                  <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+              <?php 
+              $query = "SELECT * FROM appointment";
+              $query_run = mysqli_query($conn, $query);
+
+              if(mysqli_num_rows($query_run) > 0) {
+                  foreach($query_run as $row) {
+              ?>
+              <tr>
+                  <td>&nbsp;&nbsp;&nbsp;&nbsp;<?= $row['id']; ?></td>
+                  <td>&nbsp;&nbsp;&nbsp;&nbsp;<?= $row['name']; ?></td>
+                  <td>&nbsp;&nbsp;&nbsp;&nbsp;<?= $row['vehicle']; ?></td>
+                  <td>&nbsp;&nbsp;&nbsp;&nbsp;<?= $row['service']; ?></td>
+                  <td><?= $row['status']; ?></td>
+                  <td>
+                      <button class="btn btn-primary" onclick="getService(<?= $row['id']; ?>)"><i class="bx bx-edit"></i></button>
+                      <button class="btn btn-danger" onclick="deleteService(<?= $row['id']; ?>)"><i class="bx bx-trash"></i></button>
+                  </td>
+              </tr>
+              <?php
+                  }
+              } else {
+                  echo "<tr><td colspan='3' class='text-center'>No Record Found</td></tr>";
               }
-          }
-          ?>
-        </tbody>
-    </table>
-    </div>
-			</div>
-    
+              ?>                            
+          </tbody>
+      </table>
+  </div>
+</div>     
 </main>
 
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+         $(document).ready(function() {
+            // DataTable initialization
+            var table = $('#example').DataTable();
+
+        });
+</script>
 </body>
 </html>

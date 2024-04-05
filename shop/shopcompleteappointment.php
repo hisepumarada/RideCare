@@ -38,27 +38,6 @@ $page = 'shopbook';
 	<!-- SIDEBAR -->
 	
 		<main>
-
-		<div class="head-title">
-				<div class="left">
-					<h1>Appointment</h1>
-					<ul class="breadcrumb">
-						<li>
-						<a class="active" href="shopdashboard.php">Dashboard</a>
-						</li>
-						<li><i class='bx bx-chevron-right' ></i></li>
-						<li>
-							<a class="hide" href="shopbook.php">Appointment</a>
-						</li>
-                        <li><i class='bx bx-chevron-right' ></i></li>
-						<li>
-							<a class="hide" href="shopbook.php">Booking Appointment</a>
-						</li>
-					</ul>
-				</div>
-                <div class="kaliwa"></div>
-			</div>
-
 			<div class="table-data">
 				<div class="order">
                     <div class="head"><h1 style="font-size: 50px;">Appointments for RideCare</h1></div>           
@@ -84,13 +63,13 @@ if($riders && mysqli_num_rows($riders) > 0)
     {
         echo "
         <tr>
-            <td>{$row['appointment_id']}   </td>
+            <td>{$row['id']}   </td>
             <td>{$row['date']}&nbsp;</td>
             <td>{$row['name']}&nbsp;</td>
             <td>{$row['mobile']}&nbsp;&nbsp;</td>
             <td>{$row['vehicle']}</td>
             <td>{$row['service']}</td>
-            <td>&nbsp;&nbsp;<a class='btn btn-primary mr-3' href='shopallappointmentedit.php?appointment_id={$row['appointment_id']}'>EDIT</a></td>
+            <td>&nbsp;&nbsp;<a class='btn btn-primary mr-3' href='shopallappointmentedit.php?appointment_id={$row['id']}'>EDIT</a></td>
         </tr>
         ";
     }

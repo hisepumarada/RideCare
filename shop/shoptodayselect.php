@@ -25,14 +25,14 @@ $output .= '<style>.kaliwa { float: left; }</style>
 while ($row = mysqli_fetch_array($result)) {
     $output .= '
         <tr>  
-            <td>&nbsp;&nbsp;' . $row["appointment_id"] . '&nbsp;&nbsp;</td>  
+            <td>&nbsp;&nbsp;' . $row["id"] . '&nbsp;&nbsp;</td>  
             <td>' . date('F j, Y', strtotime($row["date"])) . '</td>   
             <td>&nbsp;&nbsp;' . $row["name"] . '&nbsp;&nbsp;</td>  
             <td>&nbsp;&nbsp;' . $row["email"] . '&nbsp;&nbsp;</td>  
             <td>&nbsp;&nbsp;' . $row["mobile"] . '&nbsp;&nbsp;</td>  
             <td>' . $row["service"] . '</td> 
             <td>
-                <select style="color: black; font-size:18px;" class="status" onchange="getval(this)" data-id4="' . $row["appointment_id"] . '" contenteditable >
+                <select style="color: black; font-size:18px;" class="status" onchange="getval(this)" data-id4="' . $row["id"] . '" contenteditable >
                     <option selected disabled> Process </option>
                     <option>Completed</option>
                     <option>Reject</option>

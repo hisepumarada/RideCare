@@ -31,30 +31,13 @@ $page = 'shopriders';
 </head>	
 <body>
 		<!-- MAIN -->
-        <main>
-        <div class="head-title">
-				<div class="left">
-					<h1>RIDERS</h1>
-					<ul class="breadcrumb">
-						<li>
-						<a class="active" href="shopdashboard.php">Dashboard</a>
-						</li>
-						<li><i class='bx bx-chevron-right' ></i></li>
-						<li>
-							<a class="hide" href="shoppaymentrider.php">Riders</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-            <ul class="box-info">
-                    <li>
-                        <i class='bx bxs-calendar-check'></i>
-                        <span class="text">
-                        <p>For Approval Riders</p>
-                        <a type="button" style="color: black;" class="btn btn-outline-primary" href="shopapprovalrider.php">Click for details</a>
-                        </span>
-                    </li>
-        </ul>
+<main>
+    <div class="head-title">
+        <div class="left">
+            <h1>RIDERS OF RideCare</h1>
+        </div>
+    </div>
+
         <div class="table-data">
                 <div class="order">
                   
@@ -71,25 +54,24 @@ $page = 'shopriders';
         </thead>
         <tbody>
         <?php 
-$riders = mysqli_query($conn, "SELECT * FROM user WHERE usertype = 'rider'") or die(mysqli_error($conn));
+        $riders = mysqli_query($conn, "SELECT * FROM user WHERE usertype = 'rider'") or die(mysqli_error($conn));
 
-if($riders && mysqli_num_rows($riders) > 0)
-{
-    foreach($riders as $row) 
-    {
-        echo "
-        <tr>
-            <td>{$row['usertype_id']}</td>
-            <td>{$row['firstname']}</td>
-            <td>{$row['lastname']}</td>
-            <td>{$row['mobile']}</td>
-            <td>{$row['email']}</td>
-            <td><a class='btn btn-primary mr-3' href='shopridermenu.php?usertype_id={$row['usertype_id']}'>VIEW</a></td>
-        </tr>";
-    }
-}
-?>
-
+        if($riders && mysqli_num_rows($riders) > 0)
+        {
+            foreach($riders as $row) 
+            {
+                echo "
+                <tr>
+                    <td>&nbsp;&nbsp;&nbsp;{$row['usertype_id']}</td>
+                    <td>{$row['firstname']}</td>
+                    <td>{$row['lastname']}</td>
+                    <td>{$row['mobile']}</td>
+                    <td>{$row['email']}</td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;<a class='btn btn-primary mr-3' href='shopridermenu.php?usertype_id={$row['usertype_id']}'><i class='bx bx-info-circle'></a></td>
+                </tr>";
+            }
+        }
+        ?>
         </tbody>
     </table>
     </div>

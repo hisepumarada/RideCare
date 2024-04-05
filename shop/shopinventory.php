@@ -15,87 +15,33 @@ $page = 'shopinventory';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <title>RideCare SHOP: Inventory</title>
-<style>
-	    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-		.row.content {height: 550px}
-    
-    /* Set gray background color and 100% height */
-    .sidenav {
-      background-color: #f1f1f1;
-      height: 100%;
-    }
-        
-    /* On small screens, set height to 'auto' for the grid */
-    @media screen and (max-width: 767px) {
-      .row.content {height: auto;} 
-    }
-    .card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Style for the title */
-        .card h2 {
-            color: #333;
-        }
-
-        /* Style for the content */
-        .card p {
-            color: #666;
-        }
-
-        /* Style for the image */
-        .card img {
-            max-width: 100%;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-
-        /* Style for the form */
-        .card form {
-            margin-top: 10px;
-        }
-
-        /* Style for the input and button */
-        .card input, .card button {
-            margin-right: 5px;
-        }
-</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<title>RideCare SHOP: Inventory</title>
 </head>
 <body>
 <?php include '../inc/sidebarshop.php';  ?>
 
 <main>
-			<div class="head-title">
-				<div class="left">
-					<h1>Inventory</h1>
-					<ul class="breadcrumb">
-						<li>
-							<a href="#">Dashboard</a>
-						</li>
-						<li><i class='bx bx-chevron-right' ></i></li>
-						<li>
-							<a class="active" href="shopappointment.php">Inventory</a>
-						</li>
-					</ul>
-				</div>
-                <a href='shopinventorycreate.php' class="btn-download">
-					<i class='bx bx-add-to-queue' ></i>
-					<span class="text">ADD PRODUCT</span>
-				</a>
-			</div>
+    <div class="head-title">
+        <div class="left">
+            <h1>Inventory</h1>
+        </div>
+        <a type="button" class="btn-download" data-toggle="modal" data-target="#addProductModal">
+            <i class='bx bx-add-to-queue' ></i>
+            <span class="text">ADD PRODUCT</span>
+</a>
+    </div>
 
-    <div class="table-data">
-     <div class="order">
+
+<div class="table-data">
+    <div class="order">
      <table id="example" class="table table-striped" style="width:100%">
     <thead>
         <tr>
@@ -114,52 +60,205 @@ $page = 'shopinventory';
         while($rider = mysqli_fetch_array($query_run)) {
             ?>
             <tr>
-                <td><?php echo $rider['product_id']; ?></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $rider['id']; ?></td>
                 <td><?php echo $rider['name']; ?></td>
-                <td><?php echo $rider['quantity']; ?></td>
-                <td><?php echo $rider['amount']; ?></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $rider['quantity']; ?></td>
+                <td>&nbsp;&nbsp;&nbsp;<?php echo $rider['amount']; ?></td>
                 <td>
-                <form method="POST" action="">
-                <a class='btn btn-primary mr-3' href="shopinventoryedit.php?product_id=<?php echo $rider['product_id']; ?>">EDIT</a>
-                    <input type="hidden" name="product_id" value="<?php echo $rider['product_id']; ?>"> 
-                  <button class='btn btn-danger' type="submit" name="delete_btn">DELETE</button>
-                </form>
-            </td>
+                    <button class="btn btn-primary" onclick="getProduct(<?= $rider['id']; ?>)"><i class="bx bx-edit"></i></button>
+                    <button class="btn btn-danger" onclick="deleteProduct(<?= $rider['id']; ?>)"><i class="bx bx-trash"></i></button>
+                </td>
             </tr>
             <?php
         }
-    
     ?>
     </tbody>
 </table>
+</div>
+</div>
 
+<!-- ADD MODAL -->
+<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addProductModalLabel">Product Details</h1>
+            </div>
+            <div class="modal-body">
+            <form id="addProductForm">
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input class="form-control" id="namex"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Quantity</label>
+                        <input type="text" class="form-control" id="quantityx">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Amount</label>
+                        <input type="text" class="form-control" id="amountx">
+                    </div>
+            </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="addProduct()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- EDIT MODAL -->
+<div class="modal fade" id="viewProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Product Details</h1>
+            </div>
+            <div class="modal-body">
+            <form  action="viewBookForm">
+                <input  class="form-control" id="productid" hidden>
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input class="form-control" id="name"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Quantity</label>
+                        <input type="text" class="form-control" id="quantity">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Amount</label>
+                        <input type="text" class="form-control" id="amount">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="editProduct()">Submit</button>
+            </div>
+        </div>
     </div>
-    </div>
-	
-    
+</div>
 </main>
-<?php
-    if(isset($_POST['delete_btn'])) {
-    $product_id_to_delete = mysqli_real_escape_string($conn, $_POST['product_id']);
-    
-    // Perform the deletion query
-    $delete_query = "DELETE FROM product WHERE product_id = '$product_id_to_delete'";
-    $delete_query_run = mysqli_query($conn, $delete_query);
-    ?>
-    <script>
-    swal({
-     title: "Product Deleted is Success",
-     text: "",
-     icon: "success",
-     button: "Okay!",
-  }).then(function() {
-   window.location = "shopinventory.php";
-});
-   </script>  
-   <?php
-}    
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+         $(document).ready(function() {
+            // DataTable initialization
+            var table = $('#example').DataTable();
 
-?>
+        });
+</script>
+<script>
+    function addProduct() {
+    var name = $('#namex').val();
+    var quantity = $('#quantityx').val();
+    var amount = $('#amountx').val();
+    console.log(name);
+    // Create an object to hold the form data
+    var formData = {
+        name: name,
+        quantity: quantity,
+        amount: amount
+    };    
+        $.ajax({
+            url: 'shopinventoryfunction.php',
+            type: 'POST',
+            data: {action: 'addProduct', formData},
+            success: function(response) {
+                swal({
+                title: "Product Added Successfully!",
+                text: "",
+                icon: "success",
+                button: "Okay!",
+            }).then((value) => {
+                location.reload(); // Reload the page
+            });
+            },
+            error: function(xhr, status, error) {
+                // Handle error response here
+                console.error('Error:', error);
+            }
+        });
+    }
+
+function getProduct(id) {
+    $.ajax({
+        url: 'shopinventoryfunction.php', 
+        type: 'GET',
+        data: { action: 'getProduct', id: id }, 
+        success: function(response) {
+            var data = JSON.parse(response);
+            if (data !== null) {
+                // If data is not null, display the service information in the modal
+                $('#serviceInfo').text(JSON.stringify(data));
+                $('#productid').val(data.id);
+                $('#name').val(data.name);
+                $('#quantity').val(data.quantity);
+                $('#amount').val(data.amount);
+
+                console.log(data); // Assuming you have an element with id="serviceInfo" to display the service
+                $('#viewProductModal').modal('show');
+            } else {
+                alert('Service not found.');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(error); // Log any errors to the console
+        }
+    });
+}
+
+function editProduct() {
+    var id = $('#productid').val();
+    var name = $('#name').val();
+    var quantity = $('#quantity').val();
+    var amount = $('#amount').val();
+    $.ajax({
+        url: 'shopinventoryfunction.php', 
+        type: 'POST',
+        data: { action: 'editProduct', id: id, name: name, quantity: quantity, amount: amount }, 
+        success: function(response) {
+            swal({
+                title: "Product Updated Successfully!",
+                text: "",
+                icon: "success",
+                button: "Okay!",
+            }).then((value) => {
+                location.reload(); // Reload the page
+            });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+function deleteProduct(id) {
+    $.ajax({
+        url: 'shopinventoryfunction.php', 
+        type: 'DELETE', 
+        data: { action: 'deleteProduct', id: id }, 
+        success: function(response) {
+            swal({
+                title: "Product Deleted Successfully!",
+                text: "",
+                icon: "success",
+                button: "Okay!",
+            }).then((value) => {
+                location.reload(); // Reload the page
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+</script>
 </body>
 </html>

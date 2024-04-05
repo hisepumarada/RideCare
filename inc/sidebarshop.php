@@ -6,6 +6,7 @@ if (isset($_SESSION['email'])) {
 
 <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
 
@@ -648,7 +649,7 @@ body {
 }
 </style>
 
-<section id="sidebar" >
+<section id="sidebar" class="hide">
 		<a href="#" class="brand">
 			<i class='bx bx-cycling'></i>
 			<span class="text">RideCare (SHOP)</span>
@@ -675,10 +676,10 @@ body {
 			<i class='bx bxs-box' ></i>
 			<span class="text">Inventory</span></a>
 		</li>
-		<li class="<?php if($page=='shopmessage'){echo 'active';}?>">
-			<a href="shopmessage.php">
-			<i class='bx bxs-message-dots' ></i>
-			<span class="text">Message</span></a>
+		<li class="<?php if($page=='shopservice'){echo 'active';}?>">
+			<a href="shopservice.php">
+			<i class='bx bxs-cog' ></i>
+			<span class="text">Service</span></a>
 		</li>
 		<li class="<?php if($page=='shopbook'){echo 'active';}?>">
 			<a href="shopappointment.php">
