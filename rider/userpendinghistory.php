@@ -27,10 +27,7 @@ $usertype_id = $_SESSION['usertype_id'];
 </head>
 
 <style>
-
-
-
-.tbl{
+    .tbl{
     width: 100%;
     border-collapse: collapse;
 }
@@ -80,24 +77,136 @@ $usertype_id = $_SESSION['usertype_id'];
           font-size: 3.5rem;
         }
       }
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+.container .heading{
+    text-align: center;
+    padding-bottom: 15px;
+    color:black;
+    text-shadow: 0 5px 10px rgba(0,0,0,.2);
+    font-size: 50px;
+}
+
+.container .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap:15px;
+}
+
+.container .box-container .box{
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    border-radius: 5px;
+    background: #fff;
+    text-align: center;
+    padding:30px 20px;
+}
+
+.container .box-container .box img{
+    height: 80px;
+}
+
+.container .box-container .box h3{
+    color:#444;
+    font-size: 22px;
+    padding:10px 0;
+}
+
+.container .box-container .box p{
+    color:#777;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.container .box-container .box .btn{
+    margin-top: 10px;
+    display: inline-block;
+    background:#333;
+    color:#fff;
+    font-size: 17px;
+    border-radius: 5px;
+    padding: 8px 25px;
+}
+
+.container .box-container .box .btn:hover{
+    letter-spacing: 1px;
+}
+
+.container .box-container .box:hover{
+    box-shadow: 0 10px 15px rgba(0,0,0,.3);
+    transform: scale(1.03);
+}
+
+@media (max-width:768px){
+    .container{
+        padding:20px;
+    }
+}
+.button-30 {
+  align-items: center;
+  appearance: none;
+  background-color: #FCFCFD;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #36395A;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono",monospace;
+  height: 48px;
+  justify-content: flex-end; 
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 18px;
+}
+
+.button-30:focus {
+  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+}
+
+.button-30:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.button-30:active {
+  box-shadow: #D6D6E7 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
 </style>
 <body>
 <?php include '../inc/header.php'; ?> 
-<br><br><center>
-<h1>BOOK APPOINTMENT HISTORY</h1></center><BR></BR>
+<br><br>
 <div class="container">
+    <a class="button-30" role="button"  href="userhistorymenu.php">All Appointment</a> &nbsp;      
+    <a class="button-30" role="button"  href="userpendinghistory.php" style="background-color: lightblue;">Pending</a> &nbsp;  
+    <a class="button-30" role="button" href="usercompletehistory.php">Completed</a> &nbsp;
+    <a class="button-30" role="button" href="usercancelhistory.php">Cancelled</a> &nbsp;  
+<br><br>
         <div class="tbl_container">
         <table class="tbl">
             <thead>
             <tr>
-          <th>  ID </th>    
           <th> Appointment Date </th> 
+          <th> Vehicle </th>          
           <th> Service </th>
 		  <th> Status </th> 
                </tr>
                <tbody>
                <?php 
-        $book = mysqli_query($conn,"SELECT * FROM appointment WHERE usertype_id='$usertype_id'") or die(mysqli_error($conn));
+        $book = mysqli_query($conn,"SELECT * FROM appointment WHERE usertype_id='$usertype_id' AND status = 'pending'") or die(mysqli_error($conn));
         if($book)
         {
             if(mysqli_num_rows($book) > 0)
@@ -106,8 +215,8 @@ $usertype_id = $_SESSION['usertype_id'];
                 {
              ?>    
         <tr> 
-                  <td><?= $row['appointment_id']; ?></td> 
                   <td><?= $row['date']; ?></td> 
+                  <td><?= $row['vehicle']; ?></td> 
                   <td><?= $row['service']; ?></td> 
                   <td><?= $row['status']; ?></td>  
               </tr>

@@ -19,9 +19,10 @@ $usertype_id = $_SESSION['usertype_id'];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script> 
     <script defer src="script.js"></script>
-    <title>RideCare: History Menu</title>
+    <title>RideCare: Rider Motorcycle Vehicle</title>
 </head>
 <style>
     .tbl{
@@ -186,25 +187,25 @@ $usertype_id = $_SESSION['usertype_id'];
 
 <body>
 <?php include '../inc/header.php'; ?> 
-<div class="container">
 <br><br>
-<a class="button-30" role="button" href="userhistorymenu.php" style="background-color: lightblue;">All Appointment</a> &nbsp;
-    <a class="button-30" role="button"  href="userpendinghistory.php">Pending</a> &nbsp;  
-    <a class="button-30" role="button" href="usercompletehistory.php">Completed</a> &nbsp;
+<div class="container">
+<a class="button-30" role="button"  href="userhistorymenu.php">All Appointment</a> &nbsp;      
+<a class="button-30" role="button"  href="userpendinghistory.php">Pending</a> &nbsp;  
+    <a class="button-30" role="button" href="usercompletehistory.php" style="background-color: lightblue;">Completed</a> &nbsp;
     <a class="button-30" role="button" href="usercancelhistory.php">Cancelled</a> &nbsp;  
 <br><br>
-<div class="tbl_container">
+        <div class="tbl_container">
         <table class="tbl">
             <thead>
             <tr>
-          <th> Date </th>    
-          <th> Vehicle </th> 
-          <th> Service </th> 
-          <th> Status </th> 
-        </tr></thead>
+          <th> APPOINTMENT DATE </th> 
+          <th> VEHICLE </th> 
+          <th> SERVICE </th> 
+          <th> MECHANIC </th>
+               </tr>
                <tbody>
                <?php 
-        $book = mysqli_query($conn,"SELECT * FROM appointment WHERE usertype_id='$usertype_id' ORDER BY id DESC ") or die(mysqli_error($conn));
+        $book = mysqli_query($conn,"SELECT * FROM appointment WHERE usertype_id='$usertype_id' AND status='completed'") or die(mysqli_error($conn));
         if($book)
         {
             if(mysqli_num_rows($book) > 0)
@@ -215,35 +216,16 @@ $usertype_id = $_SESSION['usertype_id'];
         <tr> 
                   <td><?= $row['date']; ?></td> 
                   <td><?= $row['vehicle']; ?></td> 
-                  <td><?= $row['service']; ?></td> 
-                  <td style="background-color: 
-    <?php 
-        // Check the status and set background color accordingly
-        if (strtolower($row['status']) == 'completed') {
-            echo '#50C878';
-        } elseif (strtolower($row['status']) == 'pending') {
-            echo '#FDDA0D';
-        } elseif (strtolower($row['status']) == 'close') {
-            echo '#D22B2B';
-        } else {
-            // Default background color if status doesn't match any condition
-            echo 'white';
-        }
-    ?>;">
-    <?= strtoupper($row['status']); ?>
-</td>
+                  <td><?= $row['service']; ?></td>  
+                  <td><?= $row['mechanic']; ?></td>  
               </tr>
               <?php }}}?>
             </tbody>
         </table>
         </div>
+    </div>
 
-
-    
-    
-
-</div>
-<br><br><br><br>
-<?php  include '../inc/footer.php';   ?>
+    <br><br>    <br><br>
+    <?php include "../inc/footer.php"; ?>  
 </body>
 </html>
