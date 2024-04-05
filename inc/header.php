@@ -101,7 +101,7 @@ if (isset($_SESSION['usertype_id'])) {
       
     
       <div class="btn-group">
-<button class="btn btn-secondary btn-lg" type="button" onclick="window.location.href='userprofile.php'">
+<button class="btn btn-secondary btn-lg" type="button" onclick="">
 <?php echo $result['firstname']; ?>  <?php echo $result['lastname']; ?>          &nbsp;&nbsp;
      <?php if($result['image'] == ''){
             echo '<img style="vertical-align: middle;

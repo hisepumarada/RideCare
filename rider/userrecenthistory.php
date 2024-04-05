@@ -98,7 +98,7 @@ $usertype_id = $_SESSION['usertype_id'];
                </tr>
                <tbody>
                <?php 
-        $book = mysqli_query($conn,"SELECT * FROM appointment WHERE usertype_id='$usertype_id' AND (status='closed' OR status='pending' OR status='holiday')") or die(mysqli_error($conn));
+        $book = mysqli_query($conn,"SELECT * FROM appointment WHERE usertype_id='$usertype_id'") or die(mysqli_error($conn));
         if($book)
         {
             if(mysqli_num_rows($book) > 0)

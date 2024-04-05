@@ -81,6 +81,14 @@ $usertype_id = $_SESSION['usertype_id'];
     box-shadow: 0 10px 15px rgba(0,0,0,.3);
     transform: scale(1.03);
 }
+.motorcycle-image {
+            display: block;
+            margin: 10px auto;
+            width: 20%; /* Set the width to fill the container */
+            max-width: 100px; /* Limit the maximum width */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 5px;
+        }
 
 @media (max-width:768px){
     .container{
@@ -97,20 +105,27 @@ $usertype_id = $_SESSION['usertype_id'];
     <h1 class="heading">PAYMENT HISTORY</h1> 
 <br><br>
 <div class="box-container">
-<?php
-$booked_vehicles = array(); 
-
-$book = mysqli_query($conn, "SELECT * FROM payment WHERE usertype_id='$usertype_id'") or die(mysqli_error($conn));
-
-if ($book && mysqli_num_rows($book) > 0) {
-    foreach ($book as $row) {
-        $vehicle = $row['vehicle'];
-        if (!in_array($vehicle, $booked_vehicles)) {
-            $booked_vehicles[] = $vehicle;
-?>
+<?php 
+$book = mysqli_query($conn,"SELECT * FROM vehicle WHERE usertype_id='$usertype_id'") or die(mysqli_error($conn));
+if($book)
+{
+    if(mysqli_num_rows($book) > 0)
+    {
+        foreach($book as $row) 
+        {
+?>  
                 <div class="box">
-                    <h3><?php echo $vehicle; ?></h3>
-                    <a href='userpayments.php?vehicle=<?php echo $vehicle; ?>' class="btn">Read More</a>
+                    <h3><?= $row['vehicle']; ?></h3>
+                    <?php 
+                    if (!empty($row['image'])) {
+                        // If the image exists, display it
+                        echo '<img class="motorcycle-image" src="../uploaded_img/'.$row['image'].'" alt="Motorcycle Image">';
+                    } else {
+                        // If the image does not exist, display a default image
+                        echo '<img class="motorcycle-image" src="../css/images/user.png" alt="Motorcycle Image">';
+                    }
+                    ?>
+                    <a href='userpayments.php?vehicle=<?= $row['id']; ?>' class="btn">Read More</a>
                 </div>
 <?php
         }

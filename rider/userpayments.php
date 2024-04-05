@@ -88,11 +88,10 @@ $usertype_id = $_SESSION['usertype_id'];
         <table class="tbl">
             <thead>
               
-               <tr>
-          <th> Payment ID </th>    
+               <tr>  
+          <th> Status </th>
           <th> Payment Date </th> 
 		  <th> Vehicle </th> 
-          <th> Status </th>
           <th> Amount </th>
                </tr>
                <tbody>
@@ -100,7 +99,7 @@ $usertype_id = $_SESSION['usertype_id'];
                 if(isset($_GET['vehicle']))
                 {
                     $vehicle = mysqli_real_escape_string($conn, $_GET['vehicle']);
-        $book = mysqli_query($conn,"SELECT * FROM payment WHERE usertype_id='$usertype_id' AND vehicle='$vehicle'") or die(mysqli_error($conn));
+        $book = mysqli_query($conn,"SELECT * FROM payment WHERE usertype_id='$usertype_id' AND vehicle_id='$vehicle' ORDER BY id DESC") or die(mysqli_error($conn));
         if($book)
         {
             if(mysqli_num_rows($book) > 0)
@@ -109,10 +108,26 @@ $usertype_id = $_SESSION['usertype_id'];
                 {
              ?>    
         <tr> 
-                  <td><?= $row['payment_id']; ?></td> 
+                        <td>
+                        <?php 
+                        // Check the status and set the icon and color accordingly
+                        if (strtolower($row['status']) == 'complete') {
+                            // Display the check icon with green color if the status is "complete"
+                            echo '<i class="bx bxs-check-circle bx-lg" style="color: green;"></i>';
+                        } elseif (strtolower($row['status']) == 'pending') {
+                            // Display the pending icon with yellow color if the status is "pending"
+                            echo '<i class="bx bxs-time bx-lg" style="color: yellow;"></i>';
+                        } elseif (strtolower($row['status']) == 'due') {
+                            // Display the due icon with red color if the status is "due"
+                            echo '<i class="bx bxs-error-circle bx-lg" style="color: red;"></i>';
+                        } else {
+                            // For other statuses, display the status text
+                            echo $row['status'];
+                        }
+                        ?>
+                    </td>
                   <td><?= date("F d, Y", strtotime($row['date']));?></td> 
                   <td><?= $row['vehicle']; ?></td>  
-                  <td><?= $row['status']; ?></td> 
                   <td><?= $row['amount']; ?></td>   
               </tr>
               <?php }}}}?>
