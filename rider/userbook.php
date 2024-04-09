@@ -198,7 +198,7 @@ if (isset($_POST['submit'])) {
                 icon: "warning",
                 button: "Okay",
               }).then(function() {
-                    window.location = "userhome.php";
+                    window.location = "userhistorymenu.php";
                 });
         </script> 
         <?php
@@ -216,7 +216,7 @@ if (isset($_POST['submit'])) {
                     icon: "success",
                     button: "Okay",
                 }).then(function() {
-                    window.location = "userhome.php";
+                    window.location = "userhistorymenu.php";
                 });
             </script>
             <?php
@@ -256,7 +256,8 @@ if(mysqli_num_rows($select) > 0){
               $select = mysqli_query($conn, "SELECT * FROM vehicle WHERE usertype_id = '$usertype_id'") or die('query failed');
               ?>
               <div class="form-group">
-                  <label class="form-label">Motorcycle Vehicle</label><br>
+                  <label class="form-label">Motorcycle Vehicle <a class="btn btn-dark" href="uservehicleadd.php" type="submit" name="submit" style="color: white;">ADD MOTORCYCLE</a></label>
+                  <br>
                   <select required class="form-select" id="vehicle" name="vehicle">
                       <option class="col-md-8 fs-6" selected disabled>Select Vehicle</option>
                       <?php
@@ -272,7 +273,7 @@ if(mysqli_num_rows($select) > 0){
                           echo '<option class="col-md-8 fs-4" disabled>No vehicles found</option>';
                       }
                       ?>
-                  </select>
+                  </select>            
               </div>
           
             <div class="form-group">
@@ -281,7 +282,7 @@ if(mysqli_num_rows($select) > 0){
                 <option class="col-md-8 fs-6" selected disabled>Select Service</option>
               <?php
                 // Execute query to fetch options from the status table
-                $select = mysqli_query($conn, "SELECT * FROM service") or die('Query failed');
+                $select = mysqli_query($conn, "SELECT * FROM service WHERE status = 'active'") or die('Query failed');
 
                 // Check if there are rows returned from the query
                 if(mysqli_num_rows($select) > 0) {

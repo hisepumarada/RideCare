@@ -25,6 +25,8 @@ if (isset($_SESSION['usertype_id'])) {}else{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script> 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.css" rel="stylesheet">
     <script defer src="script.js"></script>
     <title>RideCare: Rider Motorcycle Vehicle</title>
 </head>
@@ -38,7 +40,6 @@ if (isset($_SESSION['usertype_id'])) {}else{
     background: #424949;
     color: #fff;
 }
-
 .tbl thead tr th{
     font-size: 0.9rem;
     padding: 0.8rem;
@@ -198,18 +199,21 @@ if (isset($_SESSION['usertype_id'])) {}else{
 <a class="button-30" role="button" href="usercompletehistory.php">Completed</a> &nbsp;
 <a class="button-30" role="button" href="usercancelhistory.php" style="background-color: lightblue;">Cancelled</a> &nbsp;  
 <br><br>
-        <div class="tbl_container">
-        <table class="tbl">
+<h2>Cancelled Appointment</h2>
+<div class="tbl_container">
+        <table class="tbl" id="example">
             <thead>
             <tr>
-          <th> APPOINTMENT DATE </th> 
-          <th> VEHICLE </th> 
-          <th> SERVICE </th> 
-          <th> STATUS </th>
+          <th> Appointment Date </th> 
+          <th> Vehicle </th>          
+          <th> Service </th>
+          <th> Odometer </th>
+		  <th> Status </th> 
+          <th> Alternate Way </th>
                </tr>
                <tbody>
                <?php 
-        $book = mysqli_query($conn,"SELECT * FROM appointment WHERE usertype_id='$usertype_id' AND status='close'") or die(mysqli_error($conn));
+        $book = mysqli_query($conn,"SELECT * FROM appointment WHERE usertype_id='$usertype_id' AND status = 'close'") or die(mysqli_error($conn));
         if($book)
         {
             if(mysqli_num_rows($book) > 0)
@@ -218,10 +222,27 @@ if (isset($_SESSION['usertype_id'])) {}else{
                 {
              ?>    
         <tr> 
-                  <td><?= $row['date']; ?></td> 
+        <td><?= date("F d, Y", strtotime($row['date']));?></td> 
                   <td><?= $row['vehicle']; ?></td> 
-                  <td><?= $row['service']; ?></td>  
-                  <td><?= $row['status']; ?></td>  
+                  <td><?= $row['service']; ?></td> 
+                  <td><?= $row['odometer']; ?></td> 
+                  <td style="background-color: 
+                    <?php 
+                        // Check the status and set background color accordingly
+                        if (strtolower($row['status']) == 'completed') {
+                            echo '#50C878';
+                        } elseif (strtolower($row['status']) == 'pending') {
+                            echo '#FDDA0D';
+                        } elseif (strtolower($row['status']) == 'close') {
+                            echo '#D22B2B';
+                        } else {
+                            // Default background color if status doesn't match any condition
+                            echo 'white';
+                        }
+                        ?>;">
+                        <?= strtoupper($row['status']); ?>
+                   </td> 
+                   <td>Book another Day</td>
               </tr>
               <?php }}}?>
             </tbody>
@@ -230,6 +251,22 @@ if (isset($_SESSION['usertype_id'])) {}else{
     </div>
 
     <br><br>    <br><br>
-    <?php include "../inc/footer.php"; ?>  
+    <?php include "../inc/footer.php"; ?> 
+     
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // DataTable initialization
+        var table = $('#example').DataTable({
+            "order": [[0, "desc"]] // Set descending order on the first column
+        });
+    });
+</script> 
 </body>
 </html>

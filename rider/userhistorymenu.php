@@ -1,32 +1,36 @@
 <?php 
 session_start();
 include "../db_conn.php";
-$usertype_id = $_SESSION['usertype_id'];
+$usertype_id = $_SESSION['usertype_id']; 
 if (isset($_SESSION['usertype_id'])) {}else{
     header("Location: ../index.php");
     exit();
 }
+
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang ="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RideCare: Booking History</title>
     <!-- Link to CSS-->
     <link rel="stylesheet" href="../css/style.css">
     <!--Box Icons-->
+    <!--Box Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.css" rel="stylesheet">
     <script defer src="script.js"></script>
-    <title>RideCare: History Menu</title>
 </head>
+
 <style>
     .tbl{
     width: 100%;
@@ -187,28 +191,30 @@ if (isset($_SESSION['usertype_id'])) {}else{
 }
 
 </style>
-
 <body>
 <?php include '../inc/header.php'; ?> 
-<div class="container">
 <br><br>
-<a class="button-30" role="button" href="userhistorymenu.php" style="background-color: lightblue;">All Appointment</a> &nbsp;
-    <a class="button-30" role="button"  href="userpendinghistory.php">Pending</a> &nbsp;  
+<div class="container">
+    <a class="button-30" role="button"  href="userhistorymenu.php" style="background-color: lightblue;">All Appointment</a> &nbsp;      
+    <a class="button-30" role="button"  href="userpendinghistory.php" >Pending</a> &nbsp;  
     <a class="button-30" role="button" href="usercompletehistory.php">Completed</a> &nbsp;
     <a class="button-30" role="button" href="usercancelhistory.php">Cancelled</a> &nbsp;  
 <br><br>
-<div class="tbl_container">
-        <table class="tbl">
+<h2>All Appointment</h2>
+        <div class="tbl_container">
+        <table class="tbl" id="example">
             <thead>
             <tr>
-          <th> Date </th>    
-          <th> Vehicle </th> 
-          <th> Service </th> 
-          <th> Status </th> 
-        </tr></thead>
+          <th> Appointment Date </th> 
+          <th> Vehicle </th>          
+          <th> Service </th>
+          <th> Odometer </th>
+          <th> Mechanic </th>
+		  <th> Status </th> 
+               </tr>
                <tbody>
                <?php 
-        $book = mysqli_query($conn,"SELECT * FROM appointment WHERE usertype_id='$usertype_id' ORDER BY id DESC ") or die(mysqli_error($conn));
+        $book = mysqli_query($conn,"SELECT * FROM appointment WHERE usertype_id='$usertype_id'") or die(mysqli_error($conn));
         if($book)
         {
             if(mysqli_num_rows($book) > 0)
@@ -217,37 +223,50 @@ if (isset($_SESSION['usertype_id'])) {}else{
                 {
              ?>    
         <tr> 
-                  <td><?= $row['date']; ?></td> 
+        <td><?= date("F d, Y", strtotime($row['date']));?></td> 
                   <td><?= $row['vehicle']; ?></td> 
-                  <td><?= $row['service']; ?></td> 
+                  <td><?= $row['service']; ?> <br> <?= $row['addservice']; ?></td> 
+                  <td><?= $row['odometer']; ?></td> 
+                  <td><?= $row['mechanic']; ?></td>
                   <td style="background-color: 
-    <?php 
-        // Check the status and set background color accordingly
-        if (strtolower($row['status']) == 'completed') {
-            echo '#50C878';
-        } elseif (strtolower($row['status']) == 'pending') {
-            echo '#FDDA0D';
-        } elseif (strtolower($row['status']) == 'close') {
-            echo '#D22B2B';
-        } else {
-            // Default background color if status doesn't match any condition
-            echo 'white';
-        }
-    ?>;">
-    <?= strtoupper($row['status']); ?>
-</td>
+                    <?php 
+                        // Check the status and set background color accordingly
+                        if (strtolower($row['status']) == 'completed') {
+                            echo '#50C878';
+                        } elseif (strtolower($row['status']) == 'pending') {
+                            echo '#FDDA0D';
+                        } elseif (strtolower($row['status']) == 'close') {
+                            echo '#D22B2B';
+                        } else {
+                            // Default background color if status doesn't match any condition
+                            echo 'white';
+                        }
+                    ?>;">
+                    <?= strtoupper($row['status']); ?>
+                    </td> 
               </tr>
               <?php }}}?>
             </tbody>
         </table>
         </div>
-
-
+    </div>
+    <br><br>    <br><br>
+    <?php include "../inc/footer.php"; ?>  
     
-    
-
-</div>
-<br><br><br><br>
-<?php  include '../inc/footer.php';   ?>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // DataTable initialization
+        var table = $('#example').DataTable({
+            "order": [[0, "desc"]] // Set descending order on the first column
+        });
+    });
+</script> 
 </body>
 </html>

@@ -105,8 +105,12 @@ $page = 'shopteam';
                                 <input type="text" class="form-control" id="email">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Status</label>
-                                <input type="text" class="form-control" id="status">
+                            <label class="form-label">Status</label>
+                                <select class="form-control" id="status" required>
+                                    <option class="col-md-8 fs-6"  disabled>Select Status</option>
+                                    <option value="available">Available</option>';
+                                    <option value="notavailable">Not Available</option>';
+                                </select>
                             </div>
                         </form>
                     </div>
@@ -145,7 +149,11 @@ $page = 'shopteam';
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Status</label>
-                                <input type="text" class="form-control" id="statusx">
+                                <select class="form-control" id="statusx" required>
+                                    <option class="col-md-8 fs-6"  disabled>Select Status</option>
+                                    <option value="available">Available</option>';
+                                    <option value="notavailable">Not Available</option>';
+                                </select>
                             </div>
                         </form>
                     </div>

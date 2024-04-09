@@ -144,7 +144,7 @@ $page = 'shopbook';
             <div class="modal-dialog modal-dialog-centered" style="max-width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Rider's Information</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Appointment's Information</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -210,7 +210,7 @@ $page = 'shopbook';
             <div class="modal-dialog modal-dialog-centered" style="max-width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Rider's Information</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Refuse Appointment</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -236,7 +236,7 @@ $page = 'shopbook';
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" onclick="rejectBook()">Reject</button>
+                        <button type="button" class="btn btn-primary" onclick="rejectBook()">Submit</button>
                     </div>
                 </div>
             </div>
